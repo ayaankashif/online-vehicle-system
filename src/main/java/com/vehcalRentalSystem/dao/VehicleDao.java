@@ -1,6 +1,5 @@
 package com.vehcalRentalSystem.dao;
 
-import com.vehcalRentalSystem.model.Users;
 import com.vehcalRentalSystem.model.Vehicle;
 
 import java.util.List;

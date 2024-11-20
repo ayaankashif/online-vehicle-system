@@ -1,11 +1,10 @@
 package com.vehcalRentalSystem.model;
 
 import java.sql.Date;
-import java.util.Objects;
 
 public class Users extends BaseModel {
 
-    private String userId;
+    private Integer userId;
     private String userName;
     private String contactInfo;
     private String userNic;
@@ -23,7 +22,7 @@ public class Users extends BaseModel {
         this.userNic = userNic;
     }
 
-    public Users(String userId, String userName, String contactInfo, String userNic, String address, String driverLicenceNumber, Date createdDate, Date modifiedDate) {
+    public Users(Integer userId, String userName, String contactInfo, String userNic, String address, String driverLicenceNumber, Date createdDate, Date modifiedDate) {
         this(userName,contactInfo,userNic);
         this.userId = userId;
         this.address = address;
@@ -32,11 +31,11 @@ public class Users extends BaseModel {
         this.modifiedDate = modifiedDate;
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

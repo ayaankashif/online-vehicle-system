@@ -1,7 +1,7 @@
 package com.vehcalRentalSystem.model;
 
 public class Maintenance extends BaseModel{
-    private String maintenanceId;
+    private Integer maintenanceId;
     private Vehicle vehicle;
     private String maintenanceType;
     private String maintenanceStatus;
@@ -9,11 +9,11 @@ public class Maintenance extends BaseModel{
     public Maintenance() {
     }
 
-    public String getMaintenanceId() {
+    public Integer getMaintenanceId() {
         return maintenanceId;
     }
 
-    public void setMaintenanceId(String maintenanceId) {
+    public void setMaintenanceId(Integer maintenanceId) {
         this.maintenanceId = maintenanceId;
     }
 

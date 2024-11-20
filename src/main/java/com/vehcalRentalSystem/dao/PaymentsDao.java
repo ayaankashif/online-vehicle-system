@@ -7,6 +7,7 @@ import java.util.List;
 public interface PaymentsDao {
 
     List<PaymentsDao> fetchAllPayments();
+    
     Integer payment(Payments payments);
-
+    
 }

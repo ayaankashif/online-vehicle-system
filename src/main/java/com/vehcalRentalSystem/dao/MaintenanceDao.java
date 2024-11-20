@@ -7,7 +7,7 @@ import java.util.List;
 public interface MaintenanceDao {
 
     List<Maintenance> fetchAllMaintenance();
-    Integer saveMaintenance();
-    Integer updateMaintenance();
-    Integer deleteMaintenance();
+    Integer saveMaintenance(Maintenance maintenance);
+    Integer updateMaintenance(Maintenance maintenance);
+    Integer deleteMaintenance(Maintenance maintenance);
 }

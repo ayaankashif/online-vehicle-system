@@ -9,10 +9,6 @@ import com.vehcalRentalSystem.model.Vehicle;
 
 import java.util.List;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
@@ -38,8 +34,7 @@ public class App
         VehicleDao vehicleDao = new VehicleDaoImpl();
 
         // adding vehicle in db
-//        vehicleDao.saveVehicle(vehicleDefault);
-
+        //vehicleDao.saveVehicle(vehicleDefault);
         //fetch
         List<Vehicle> vehicleList = vehicleDao.fetchAllVehicles();
         for (Vehicle vehicle: vehicleList){
