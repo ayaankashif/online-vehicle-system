@@ -15,32 +15,32 @@ import java.util.List;
 public class PaymentDaoImpl implements PaymentsDao {
     @Override
     public List<Payments> fetchAllPayments() {
-        List<Maintenance> maintenanceList = new ArrayList<>();
-        try{
-            Connection conn = DatabaseConnection.getConnection();
-            Statement stmt=conn.createStatement();
-            ResultSet rs=stmt.executeQuery("select maintenance_id, vehicle_id, maintenance_type, maintenance_status from maintenance");
-            while (rs.next()){
-                Maintenance maintenance = new Maintenance();
-                
-                maintenance.setMaintenanceId(rs.getInt("Maintenance_id"));
-                //maintenance.setVehicle(rs.getInt("vehicle_id"));
-                maintenance.setMaintenanceType(rs.getString("maintenance_type"));
-                maintenance.setMaintenanceStatus(rs.getString("maintenance_status"));
-               
-                maintenanceList.add(maintenance);
-            }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    List<Payments> paymentList = new ArrayList<>();
+    try{
+        Connection conn = DatabaseConnection.getConnection();
+        Statement stmt=conn.createStatement();
+        ResultSet rs=stmt.executeQuery("select payment_id, booking_id, amount, payment_date, payment_type from payments");
+        while (rs.next()){
+            Payments payments = new Payments();
+            
+            payments.setPaymentId(rs.getInt("payment_id"));
+            //maintenance.setbooking(rs.getInt("vehicle_id"));
+            payments.setAmount(rs.getDouble("amount"));
+            payments.setPaymentDate(rs.getDate("payment_date"));
+            payments.setPaymentType(rs.getString("payment_type"));
+           
+            paymentList.add(payments);
         }
-
-        return maintenanceList;
+    } catch (ClassNotFoundException e) {
+        throw new RuntimeException(e);
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return paymentList;
 
     @Override
     public Integer payment(Payments payments) {
         return null;
     }
 }
+

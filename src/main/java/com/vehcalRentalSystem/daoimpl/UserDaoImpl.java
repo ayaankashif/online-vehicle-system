@@ -5,6 +5,7 @@ import com.vehcalRentalSystem.db.DatabaseConnection;
 import com.vehcalRentalSystem.model.Users;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,7 +22,7 @@ public class UserDaoImpl implements UsersDao {
             ResultSet rs=stmt.executeQuery("select user_id,user_name,contact_info,user_nic,user_type,address,email,driver_license_number,created_date,modified_date from users");
             while (rs.next()){
                 Users user = new Users();
-                user.setUserId(rs.getString("user_id"));
+                user.setUserId(rs.getInt("user_id"));
                 user.setUserName(rs.getString("user_name"));
                 user.setContactInfo(rs.getString("contact_info"));
                 user.setUserNic(rs.getString("user_nic"));
@@ -43,7 +44,32 @@ public class UserDaoImpl implements UsersDao {
 
     @Override
     public Integer saveUser(Users user) {
-        return null;
+        String sql = "insert into users ( user_id, user_name, contact_info, user_nic, user_type, address, email, driver_license_number, created_date, modified_date) "
+        + "values (?,?,?,?,?,?,?,?,?,?)";
+        Integer rowsAffected = 0;
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, user.getUserId());
+            statement.setString(3, user.getUserName());
+            statement.setString(2, user.getContactInfo());
+            statement.setString(4, user.getUserNic());
+            statement.setString(5, user.getUserType());
+            statement.setString(6, user.getAddress());
+            statement.setString(7, user.getEmail());
+            statement.setString(8, user.getDriverLicenceNumber());
+            statement.setDate(9, user.getCreatedDate());
+            statement.setDate(10, user.getModifiedDate());
+
+            rowsAffected = statement.executeUpdate();
+
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowsAffected;
     }
 
     @Override

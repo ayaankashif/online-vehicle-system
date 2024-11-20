@@ -49,8 +49,9 @@ public class MaintenanceDaoImpl implements MaintenanceDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setInt(1, maintenance.getMaintenanceId());
-            preparedStatement.setInt(3, maintenance.getVehicle().getVehicleId());
-            preparedStatement.setString(2, maintenance.getMaintenanceType());
+            preparedStatement.setInt(2, maintenance.getVehicle().getVehicleId());
+            preparedStatement.setString(3, maintenance.getMaintenanceType());
+            preparedStatement.setString(4, maintenance.getMaintenanceStatus());
 
             rowsAffected = preparedStatement.executeUpdate();
 
@@ -61,7 +62,7 @@ public class MaintenanceDaoImpl implements MaintenanceDao {
         }
         return rowsAffected;
     }
-
+    
     @Override
     public Integer updateMaintenance(Maintenance maintenance) {
         return null;
