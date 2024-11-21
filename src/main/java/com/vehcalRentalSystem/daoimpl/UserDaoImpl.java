@@ -3,7 +3,6 @@ package com.vehcalRentalSystem.daoimpl;
 import com.vehcalRentalSystem.dao.UsersDao;
 import com.vehcalRentalSystem.db.DatabaseConnection;
 import com.vehcalRentalSystem.model.Users;
-import com.vehcalRentalSystem.model.Vehicle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -109,7 +108,7 @@ public class UserDaoImpl implements UsersDao {
     @Override
     public Users getcustomerbyId(int userId) {
         Users user = null;
-        String sql = "select * from Users where user_i_id = ?";
+        String sql = "select * from Users where user_id = ?";
         try {
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -119,15 +118,15 @@ public class UserDaoImpl implements UsersDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 user = new Users();
-                user.setVehicleId(rs.getInt("user_id"));
-                user.setMake(rs.getString("user_name"));
-                user.setModel(rs.getString("contact_info"));
-                user.setVariant(rs.getString("user_nic"));
-                user.setSeats(rs.getString("user_type"));
-                user.setVehicleType(rs.getString("address"));
-                user.setVehicleLicenceNumber(rs.getString("email"));
-                user.setCreatedDate(rs.getDate("driver_license_number"));
-                user.setCreatedBy(rs.getString("created_date"));
+                user.setUserId(rs.getInt("user_id"));
+                user.setUserName(rs.getString("user_name"));
+                user.setContactInfo(rs.getString("contact_info"));
+                user.setUserNic(rs.getString("user_nic"));
+                user.setUserType(rs.getString("user_type"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setDriverLicenceNumber(rs.getString("driver_license_number"));
+                user.setCreatedDate(rs.getDate("created_date"));
                 user.setModifiedDate(rs.getDate("modified_date"));
         
             }
@@ -136,6 +135,6 @@ public class UserDaoImpl implements UsersDao {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return vehicle;
+        return user;
     }
 }
