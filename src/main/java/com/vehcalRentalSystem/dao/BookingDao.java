@@ -7,7 +7,13 @@ import java.util.List;
 public interface BookingDao {
 
     List<Booking> fetchAllBookings();
+    
     Integer saveBooking(Booking booking);
+
     Integer updateBooking(Booking booking);
+    
     Integer deleteBooking(Booking booking);
+    
+    Booking getbookingbyId(int bookingId);
 }
+

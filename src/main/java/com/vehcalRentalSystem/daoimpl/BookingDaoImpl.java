@@ -15,18 +15,19 @@ import java.util.List;
 public class BookingDaoImpl implements BookingDao {
     @Override
     public List<Booking> fetchAllBookings() {
-        List<Booking> bookingList =new ArrayList<>();
-        try{
+        List<Booking> bookingList = new ArrayList<>();
+        try {
             Connection conn = DatabaseConnection.getConnection();
-            Statement stmt=conn.createStatement();
-            ResultSet rs= stmt.executeQuery("select booking_id, customer_id, driver_id, vehicle_id, booking_date, start_date, end_date, ride_type, pickup, destination, booking_type, returned_date, booking_status from booking");
-            while (rs.next()){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(
+                    "select booking_id, customer_id, driver_id, vehicle_id, booking_date, start_date, end_date, ride_type, pickup, destination, booking_type, returned_date, booking_status from booking");
+            while (rs.next()) {
                 Booking booking = new Booking();
 
                 booking.setBookingId(rs.getInt("booking_id"));
-                //booking.setCustomer(rs.getInt("customer_id"));
-                //booking.setCustomer(rs.getuser().getCursorName());
-                //booking.setCustomer(rs.getuser().getCursorName());
+                // booking.setCustomer(rs.getInt("customer_id"));
+                // booking.setCustomer(rs.getuser().getCursorName());
+                // booking.setCustomer(rs.getuser().getCursorName());
                 booking.setBookingDate(rs.getDate("booking_date"));
                 booking.setStartDate(rs.getDate("start_date"));
                 booking.setEndDate(rs.getDate("end_date"));
@@ -49,8 +50,8 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public Integer saveBooking(Booking booking) {
-       String sql = "insert into users (booking_id, customer_id, driver_id, vehicle_id, booking_date, start_date, end_date, ride_type, pickup, destination, booking_type, returned_date, booking_status) "
-        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into users (booking_id, customer_id, driver_id, vehicle_id, booking_date, start_date, end_date, ride_type, pickup, destination, booking_type, returned_date, booking_status) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Integer rowsAffected = 0;
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -72,7 +73,7 @@ public class BookingDaoImpl implements BookingDao {
 
             rowsAffected = statement.executeUpdate();
 
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -88,5 +89,10 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public Integer deleteBooking(Booking booking) {
         return null;
+    }
+
+    @Override
+    public Booking getbookingbyId(int bookingId) {
+        throw new UnsupportedOperationException("Unimplemented method 'getbookingbyId'");
     }
 }

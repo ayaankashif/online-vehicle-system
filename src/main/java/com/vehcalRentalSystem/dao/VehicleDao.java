@@ -13,4 +13,6 @@ public interface VehicleDao {
     Integer updateVehicle(Vehicle vehicle);
 
     Integer deleteVehicle(Vehicle vehicle);
+    
+    Vehicle getVehicleById(int vehicleId);
 }

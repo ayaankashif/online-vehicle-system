@@ -6,7 +6,7 @@ public class Booking extends BaseModel {
     private Integer bookingId;
     private Users customer;
     private Users driver;
-    private Vehicle vehicle;
+    private Vehicle vehicle; 
     private Date bookingDate;
     private Date startDate;
     private Date endDate;

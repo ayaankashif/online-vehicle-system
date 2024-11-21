@@ -13,4 +13,7 @@ public interface UsersDao {
      Integer updateUser(Users user);
 
      Integer deleteUser(Users user);
+
+     Users getcustomerbyId(int userId);
+
 }

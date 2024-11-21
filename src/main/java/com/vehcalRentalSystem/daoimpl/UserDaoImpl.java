@@ -3,6 +3,7 @@ package com.vehcalRentalSystem.daoimpl;
 import com.vehcalRentalSystem.dao.UsersDao;
 import com.vehcalRentalSystem.db.DatabaseConnection;
 import com.vehcalRentalSystem.model.Users;
+import com.vehcalRentalSystem.model.Vehicle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,11 +17,12 @@ public class UserDaoImpl implements UsersDao {
     @Override
     public List<Users> findAllUsers() {
         List<Users> usersList = new ArrayList<>();
-        try{
+        try {
             Connection conn = DatabaseConnection.getConnection();
-            Statement stmt=conn.createStatement();
-            ResultSet rs=stmt.executeQuery("select user_id,user_name,contact_info,user_nic,user_type,address,email,driver_license_number,created_date,modified_date from users");
-            while (rs.next()){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(
+                    "select user_id,user_name,contact_info,user_nic,user_type,address,email,driver_license_number,created_date,modified_date from users");
+            while (rs.next()) {
                 Users user = new Users();
                 user.setUserId(rs.getInt("user_id"));
                 user.setUserName(rs.getString("user_name"));
@@ -44,16 +46,16 @@ public class UserDaoImpl implements UsersDao {
 
     @Override
     public Integer saveUser(Users user) {
-        String sql = "insert into users ( user_id, user_name, contact_info, user_nic, user_type, address, email, driver_license_number, created_date, modified_date) "
-        + "values (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into users (user_id, user_name, contact_info, user_nic, user_type, address, email, driver_license_number, created_date, modified_date) "
+                + "values (?,?,?,?,?,?,?,?,?,?)";
         Integer rowsAffected = 0;
         try {
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, user.getUserId());
-            statement.setString(3, user.getUserName());
-            statement.setString(2, user.getContactInfo());
+            statement.setString(2, user.getUserName());
+            statement.setString(3, user.getContactInfo());
             statement.setString(4, user.getUserNic());
             statement.setString(5, user.getUserType());
             statement.setString(6, user.getAddress());
@@ -64,7 +66,7 @@ public class UserDaoImpl implements UsersDao {
 
             rowsAffected = statement.executeUpdate();
 
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -74,11 +76,66 @@ public class UserDaoImpl implements UsersDao {
 
     @Override
     public Integer updateUser(Users user) {
-        return null;
+        String sql = "UPDATE users SET user_name = ?, contact_info = ?, user_nic = ?, address = ?, email = ?"
+        + "driver_license_number = ?, modified_date = ? WHERE user_id = ?";
+        
+        int rowsAffected = 0;
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getContactInfo());
+            statement.setString(3, user.getUserNic());
+            statement.setString(4, user.getAddress());
+            statement.setString(5, user.getEmail());
+            statement.setString(6, user.getDriverLicenceNumber());
+            
+            rowsAffected = statement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowsAffected;
     }
 
     @Override
     public Integer deleteUser(Users user) {
         return null;
+    }
+
+    @Override
+    public Users getcustomerbyId(int userId) {
+        Users user = null;
+        String sql = "select * from Users where user_i_id = ?";
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setInt(1, userId);
+            
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                user = new Users();
+                user.setVehicleId(rs.getInt("user_id"));
+                user.setMake(rs.getString("user_name"));
+                user.setModel(rs.getString("contact_info"));
+                user.setVariant(rs.getString("user_nic"));
+                user.setSeats(rs.getString("user_type"));
+                user.setVehicleType(rs.getString("address"));
+                user.setVehicleLicenceNumber(rs.getString("email"));
+                user.setCreatedDate(rs.getDate("driver_license_number"));
+                user.setCreatedBy(rs.getString("created_date"));
+                user.setModifiedDate(rs.getDate("modified_date"));
+        
+            }
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return vehicle;
     }
 }
