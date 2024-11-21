@@ -14,5 +14,5 @@ public interface MaintenanceDao {
 
     Integer deleteMaintenance(Maintenance maintenance);
 
-    
+    Maintenance getMaintenanceById(int maintenanceId);    
 }

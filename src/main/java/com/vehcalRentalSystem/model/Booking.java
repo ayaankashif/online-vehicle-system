@@ -16,7 +16,9 @@ public class Booking extends BaseModel {
     private String bookingType;
     private Date returnedDate;
     private String bookingStatus;
+    private Integer isDeleted;
 
+    
     public Booking() {
     }
 
@@ -122,5 +124,13 @@ public class Booking extends BaseModel {
 
     public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

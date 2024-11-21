@@ -12,6 +12,7 @@ public class Users extends BaseModel {
     private String driverLicenceNumber;
     private String email;
     private String userType;
+    private Integer isDeleted;
 
     public Users() {
     }
@@ -93,6 +94,14 @@ public class Users extends BaseModel {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
 }

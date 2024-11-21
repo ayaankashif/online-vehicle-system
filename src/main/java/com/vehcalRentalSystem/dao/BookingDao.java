@@ -14,6 +14,6 @@ public interface BookingDao {
     
     Integer deleteBooking(Booking booking);
     
-    Booking getbookingbyId(int bookingId);
+    Booking getBookingbyId(int bookingId);
 }
 

@@ -9,6 +9,7 @@ public class Payments extends BaseModel{
     private Double amount;
     private Date paymentDate;
     private String paymentType;
+    private Integer isDeleted;
 
     public Payments() {
     }
@@ -51,5 +52,13 @@ public class Payments extends BaseModel{
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

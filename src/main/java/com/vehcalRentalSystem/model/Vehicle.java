@@ -9,6 +9,8 @@ public class Vehicle extends BaseModel{
     private String seats;
     private String vehicleType;
     private String vehicleLicenceNumber;
+    private Integer isDeleted;
+
 
     public Vehicle() {
     }
@@ -68,5 +70,13 @@ public class Vehicle extends BaseModel{
 
     public void setVehicleLicenceNumber(String vehicleLicenceNumber) {
         this.vehicleLicenceNumber = vehicleLicenceNumber;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

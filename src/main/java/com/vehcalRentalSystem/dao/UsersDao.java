@@ -14,6 +14,6 @@ public interface UsersDao {
 
      Integer deleteUser(Users user);
 
-     Users getcustomerbyId(int userId);
+     Users getUserbyId(int userId);
 
 }

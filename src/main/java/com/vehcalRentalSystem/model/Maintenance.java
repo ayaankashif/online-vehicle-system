@@ -5,7 +5,9 @@ public class Maintenance extends BaseModel{
     private Vehicle vehicle;
     private String maintenanceType;
     private String maintenanceStatus;
+    private Integer isDeleted;
 
+    
     public Maintenance() {
     }
 
@@ -39,5 +41,13 @@ public class Maintenance extends BaseModel{
 
     public void setMaintenanceStatus(String maintenanceStatus) {
         this.maintenanceStatus = maintenanceStatus;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

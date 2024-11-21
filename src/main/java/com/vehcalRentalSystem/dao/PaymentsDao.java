@@ -10,5 +10,5 @@ public interface PaymentsDao {
     
     Integer payment(Payments payments);
     
-    
+    Payments getPaymentsById(int paymentId);   
 }

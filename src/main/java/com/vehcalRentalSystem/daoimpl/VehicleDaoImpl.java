@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleDaoImpl implements VehicleDao {
-
     @Override
     public List<Vehicle> fetchAllVehicles() {
         List<Vehicle> listVehicle = new ArrayList<>();
@@ -21,10 +20,13 @@ public class VehicleDaoImpl implements VehicleDao {
             Connection conn = DatabaseConnection.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(
-                    "select vehicle_id,make,model,varient,seats,vehicle_type,vehicle_license_no,created_date,created_by,modified_date,modified_by from vehicle");
+                    "select vehicle_id,make,model,varient,seats,vehicle_type,vehicle_license_no, "
+                    +"created_date,created_by,modified_date,modified_by,is_deleted "
+                    + "from vehicle where is_deleted = 0");
 
             while (rs.next()) {
                 Vehicle vehicle = new Vehicle();
+
                 vehicle.setVehicleId(rs.getInt("vehicle_id"));
                 vehicle.setMake(rs.getString("make"));
                 vehicle.setModel(rs.getString("model"));
@@ -36,6 +38,8 @@ public class VehicleDaoImpl implements VehicleDao {
                 vehicle.setModifiedDate(rs.getDate("modified_date"));
                 vehicle.setCreatedBy(rs.getString("created_by"));
                 vehicle.setModifiedBy(rs.getString("modified_by"));
+                vehicle.setIsDeleted(rs.getInt("is_deleted"));
+
                 listVehicle.add(vehicle);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -46,13 +50,29 @@ public class VehicleDaoImpl implements VehicleDao {
 
     @Override
     public Integer saveVehicle(Vehicle vehicle) {
-        String sql = "insert into vehicle(vehicle_id,make,model) values('" + vehicle.getVehicleId() + "','"
-                + vehicle.getMake() + "','" + vehicle.getModel() + "')";
+        String sql = "insert into vehicle (vehicle_id, make, model, varient, seats, vehicle_type, "
+                + "vehicle_license_no, created_date, created_by, modified_date, modified_by, is_deleted) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,'0')";
         Integer rowsAffected = 0;
         try {
             Connection connection = DatabaseConnection.getConnection();
-            Statement stmt = connection.createStatement();
-            rowsAffected = stmt.executeUpdate(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, vehicle.getVehicleId());
+            statement.setString(2, vehicle.getMake());
+            statement.setString(3, vehicle.getModel());
+            statement.setString(4, vehicle.getVariant());
+            statement.setString(5, vehicle.getSeats());
+            statement.setString(6, vehicle.getVehicleType());
+            statement.setString(7, vehicle.getVehicleLicenceNumber());
+            statement.setDate(8, vehicle.getCreatedDate());
+            statement.setString(9, vehicle.getCreatedBy());
+            statement.setDate(10, vehicle.getModifiedDate());
+            statement.setString(11, vehicle.getModifiedBy());
+            statement.setInt(12, vehicle.getIsDeleted());
+
+            rowsAffected = statement.executeUpdate();
+
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -88,8 +108,22 @@ public class VehicleDaoImpl implements VehicleDao {
     }
 
     @Override
-    public Integer deleteVehicle(Vehicle vehicle) {
-        return null;
+    public Integer deleteVehicle(Vehicle vehicle){
+    String sql = "update vehicle set is_deleted = 1 where vehicle_id = ?";
+        Integer rowsAffected = 0;
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setInt(1,vehicle.getVehicleId());
+            
+            rowsAffected =  statement.executeUpdate();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowsAffected;
     }
 
     @Override
@@ -116,6 +150,7 @@ public class VehicleDaoImpl implements VehicleDao {
                 vehicle.setCreatedBy(rs.getString("created_by"));
                 vehicle.setModifiedDate(rs.getDate("modified_date"));
                 vehicle.setModifiedBy(rs.getString("modified_by"));
+                vehicle.setIsDeleted(rs.getInt("is_deleted"));
             }
         }catch (SQLException sqlException){
             sqlException.printStackTrace();

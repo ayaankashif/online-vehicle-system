@@ -20,9 +20,12 @@ public class UserDaoImpl implements UsersDao {
             Connection conn = DatabaseConnection.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(
-                    "select user_id,user_name,contact_info,user_nic,user_type,address,email,driver_license_number,created_date,modified_date from users");
+                    "select user_id,user_name,contact_info,user_nic,user_type,address,email,"
+                    +"driver_license_number,created_date,modified_date,is_deleted "
+                    +"from users where is_deleted = 0");
             while (rs.next()) {
                 Users user = new Users();
+
                 user.setUserId(rs.getInt("user_id"));
                 user.setUserName(rs.getString("user_name"));
                 user.setContactInfo(rs.getString("contact_info"));
@@ -33,6 +36,8 @@ public class UserDaoImpl implements UsersDao {
                 user.setDriverLicenceNumber(rs.getString("driver_license_number"));
                 user.setCreatedDate(rs.getDate("created_date"));
                 user.setCreatedDate(rs.getDate("modified_date"));
+                user.setIsDeleted(rs.getInt("is_deleted"));
+
                 usersList.add(user);
             }
         } catch (ClassNotFoundException e) {
@@ -45,8 +50,9 @@ public class UserDaoImpl implements UsersDao {
 
     @Override
     public Integer saveUser(Users user) {
-        String sql = "insert into users (user_id, user_name, contact_info, user_nic, user_type, address, email, driver_license_number, created_date, modified_date) "
-                + "values (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into users (user_id, user_name, contact_info, user_nic, user_type, address, "
+                + "email, driver_license_number, created_date, modified_date, is_deleted) "
+                + "values (?,?,?,?,?,?,?,?,?,?,'0')";
         Integer rowsAffected = 0;
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -62,6 +68,7 @@ public class UserDaoImpl implements UsersDao {
             statement.setString(8, user.getDriverLicenceNumber());
             statement.setDate(9, user.getCreatedDate());
             statement.setDate(10, user.getModifiedDate());
+            statement.setInt(11, user.getIsDeleted());
 
             rowsAffected = statement.executeUpdate();
 
@@ -102,11 +109,23 @@ public class UserDaoImpl implements UsersDao {
 
     @Override
     public Integer deleteUser(Users user) {
-        return null;
+        String sql = "update Users set is_deleted = 1 where user_id = ?";
+        Integer rowsAffected = 0;
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,user.getUserId());
+            rowsAffected =  statement.executeUpdate();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowsAffected;
     }
 
     @Override
-    public Users getcustomerbyId(int userId) {
+    public Users getUserbyId(int userId) {
         Users user = null;
         String sql = "select * from Users where user_id = ?";
         try {
@@ -128,7 +147,7 @@ public class UserDaoImpl implements UsersDao {
                 user.setDriverLicenceNumber(rs.getString("driver_license_number"));
                 user.setCreatedDate(rs.getDate("created_date"));
                 user.setModifiedDate(rs.getDate("modified_date"));
-        
+                user.setIsDeleted(rs.getInt("is_deleted"));        
             }
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
