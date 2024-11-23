@@ -5,6 +5,7 @@ import com.vehcalRentalSystem.dao.UsersDao;
 import com.vehcalRentalSystem.dao.VehicleDao;
 import com.vehcalRentalSystem.db.DatabaseConnection;
 import com.vehcalRentalSystem.model.Booking;
+import com.vehcalRentalSystem.model.Users;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,6 +54,46 @@ public class BookingDaoImpl implements BookingDao {
         }
         return bookingList;
     }
+
+    public List<Booking> fetchAllBookings(Users users) {
+        UsersDao usersDao = new UserDaoImpl();
+        VehicleDao vehicleDao = new VehicleDaoImpl();
+        List<Booking> bookingList = new ArrayList<>();
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("select booking_id, customer_id, driver_id, vehicle_id, booking_date, start_date, end_date,"
+                    +"ride_type, pickup, destination, booking_type, returned_date, booking_status, is_deleted "
+                    +"from Booking where is_deleted = 0 and user_id = ?");
+            stmt.setInt(1,users.getUserId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingId(rs.getInt("booking_id"));
+                booking.setCustomer(usersDao.getUserbyId(rs.getInt("customer_id")));
+                booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
+                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
+                booking.setBookingDate(rs.getDate("booking_date"));
+                booking.setStartDate(rs.getDate("start_date"));
+                booking.setEndDate(rs.getDate("end_date"));
+                booking.setRideType(rs.getString("ride_type"));
+                booking.setPickup(rs.getString("pickup"));
+                booking.setDestination(rs.getString("destination"));
+                booking.setBookingType(rs.getString("booking_type"));
+                booking.setReturnedDate(rs.getDate("returned_date"));
+                booking.setBookingStatus(rs.getString("booking_status"));
+                booking.setIsDeleted(rs.getInt("is_deleted"));
+
+                bookingList.add(booking);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookingList;
+    }
+
 
     @Override
     public Integer saveBooking(Booking booking) {

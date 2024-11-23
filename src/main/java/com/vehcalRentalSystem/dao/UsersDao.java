@@ -16,4 +16,5 @@ public interface UsersDao {
 
      Users getUserbyId(int userId);
 
+     Users userLogin(String username,String password);
 }

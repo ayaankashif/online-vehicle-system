@@ -156,4 +156,25 @@ public class UserDaoImpl implements UsersDao {
         }
         return user;
     }
+
+
+    public Users userLogin(String username,String password) {
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("select user_id,user_name from user where username = ? and password = ?");
+            stmt.setString(1,username);
+            stmt.setString(2,password);
+            ResultSet rst = stmt.executeQuery();
+            if (rst.next()){
+                Users users = new Users();
+                users.setUserId(rst.getInt("UserId"));
+                return users;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }
