@@ -94,7 +94,6 @@ public class BookingDaoImpl implements BookingDao {
         return bookingList;
     }
 
-
     @Override
     public Integer saveBooking(Booking booking) {
         String sql = "insert into Booking (booking_id, customer_id, driver_id, vehicle_id, booking_date, "

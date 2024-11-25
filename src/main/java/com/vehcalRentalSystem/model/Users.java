@@ -13,21 +13,30 @@ public class Users extends BaseModel {
     private String email;
     private String userType;
     private Integer isDeleted;
+    private String password; 
+
 
     public Users() {
     }
-
-    public Users(String userName, String contactInfo, String userNic){
+    
+    public Users(String userName, String contactInfo, String driverLicenceNumber, String userNic, String address, String email, String userType){
         this.userName = userName;
         this.contactInfo = contactInfo;
+        this.driverLicenceNumber = driverLicenceNumber;
         this.userNic = userNic;
+        this.address = address;
+        this.email = email;
+        this.userType = userType;
+    }
+    
+    public Users(String userName, String contactInfo, String driverLicenceNumber, String userNic, String address, String email, String userType,String password ){
+        this(userName, contactInfo, driverLicenceNumber, userNic, address, email, userType);
+        this.password = password;
     }
 
-    public Users(Integer userId, String userName, String contactInfo, String userNic, String address, String driverLicenceNumber, Date createdDate, Date modifiedDate) {
-        this(userName,contactInfo,userNic);
+    public Users(Integer userId, String userName, String contactInfo, String userNic, String address, String driverLicenceNumber, String email, String userType, String password, Date createdDate, Date modifiedDate) {
+        this(userName,contactInfo,driverLicenceNumber,userNic,address,email,password,userType);
         this.userId = userId;
-        this.address = address;
-        this.driverLicenceNumber = driverLicenceNumber;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
@@ -104,4 +113,11 @@ public class Users extends BaseModel {
         this.isDeleted = isDeleted;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

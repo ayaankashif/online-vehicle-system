@@ -157,18 +157,31 @@ public class UserDaoImpl implements UsersDao {
         return user;
     }
 
-
+    @Override
     public Users userLogin(String username,String password) {
         try{
             Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("select user_id,user_name from user where username = ? and password = ?");
+            PreparedStatement stmt = connection.prepareStatement("select user_id,user_name,contact_info,user_nic,user_type,address,email, "
+            +"driver_license_number,created_date,modified_date,is_deleted from users where user_name = ? and password = ?");
+            
             stmt.setString(1,username);
             stmt.setString(2,password);
-            ResultSet rst = stmt.executeQuery();
-            if (rst.next()){
-                Users users = new Users();
-                users.setUserId(rst.getInt("UserId"));
-                return users;
+            
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){
+                Users user = new Users();
+                user.setUserId(rs.getInt("user_id"));
+                user.setUserName(rs.getString("user_name"));
+                user.setContactInfo(rs.getString("contact_info"));
+                user.setUserNic(rs.getString("user_nic"));
+                user.setUserType(rs.getString("user_type"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setDriverLicenceNumber(rs.getString("driver_license_number"));
+                user.setCreatedDate(rs.getDate("created_date"));
+                user.setCreatedDate(rs.getDate("modified_date"));
+                user.setIsDeleted(rs.getInt("is_deleted"));
+                return user;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

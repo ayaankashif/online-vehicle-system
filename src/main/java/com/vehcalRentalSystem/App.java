@@ -1,48 +1,55 @@
 package com.vehcalRentalSystem;
 
-import com.vehcalRentalSystem.dao.UsersDao;
-import com.vehcalRentalSystem.dao.VehicleDao;
-import com.vehcalRentalSystem.daoimpl.UserDaoImpl;
-import com.vehcalRentalSystem.daoimpl.VehicleDaoImpl;
 import com.vehcalRentalSystem.model.Users;
-import com.vehcalRentalSystem.model.Vehicle;
+//import com.vehcalRentalSystem.dao.UsersDao;
+//import com.vehcalRentalSystem.dao.VehicleDao;
+//import com.vehcalRentalSystem.daoimpl.UserDaoImpl;
+// import com.vehcalRentalSystem.daoimpl.VehicleDaoImpl;
+// import com.vehcalRentalSystem.model.Users;
+// import com.vehcalRentalSystem.model.Vehicle;
 import com.vehcalRentalSystem.service.Menu;
 
-import java.util.List;
+// import java.util.List;
 
 public class App 
 {
     public static void main( String[] args )
-    {
-        Menu menu = new Menu();
+    {   
+        Users user = new Users();
+        Menu menu = new  Menu();
+        menu.registerCustomer();
+        menu.signUp();
+        menu.registerDriver();
         menu.loginMenu();
-//        String str1 = "Hello";
-//        String str2 = "Hello";
-//        System.out.println("str1 == str2" + str1.equals(str2));
-//
-//        UsersDao usersDao = new UserDaoImpl();
-//        List<Users> usersList = usersDao.findAllUsers();
-//        for(Users user : usersList){
-//            System.out.println("UserName: " + user.getUserName());
-//        }
-//
-//        //Adding Vehicle
-//        Vehicle vehicleDefault = new Vehicle();
-//        vehicleDefault.setVehicleId(123);
-//        vehicleDefault.setMake("ABC");
-//        vehicleDefault.setModel("civic");
-//
-//
-//        System.out.println("\nVehicle Details.");
-//        VehicleDao vehicleDao = new VehicleDaoImpl();
-//
-//        // adding vehicle in db
-//        //vehicleDao.saveVehicle(vehicleDefault);
-//        //fetch
-//        List<Vehicle> vehicleList = vehicleDao.fetchAllVehicles();
-//        for (Vehicle vehicle: vehicleList){
-//            System.out.println("Vehicle: " + vehicle.getModel());
-//        }
+        menu.MainMenu(user);
+
+        
+        // String str1 = "Hello";
+        // String str2 = "Hello";
+        // System.out.println("str1 == str2" + str1.equals(str2));
+
+        // UsersDao usersDao = new UserDaoImpl();
+        // List<Users> usersList = usersDao.findAllUsers();
+        // for(Users user : usersList){
+        //     System.out.println("UserName: " + user.getUserName());
+        // }
+
+        // //Adding Vehicle
+        // Vehicle vehicleDefault = new Vehicle();
+        // vehicleDefault.setVehicleId(123);
+        // vehicleDefault.setMake("ABC");
+        // vehicleDefault.setModel("civic");
+
+        // System.out.println("\nVehicle Details.");
+        // VehicleDao vehicleDao = new VehicleDaoImpl();
+
+        // // adding vehicle in db
+        // //vehicleDao.saveVehicle(vehicleDefault);
+        // //fetch
+        // List<Vehicle> vehicleList = vehicleDao.fetchAllVehicles();
+        // for (Vehicle vehicle: vehicleList){
+        //     System.out.println("Vehicle: " + vehicle.getModel());
+        // }
 
     }
 }
