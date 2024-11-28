@@ -35,13 +35,13 @@ public class BookingDaoImpl implements BookingDao {
                 booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
                 booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
                 booking.setBookingDate(rs.getDate("booking_date"));
-                booking.setStartDate(rs.getDate("start_date"));
-                booking.setEndDate(rs.getDate("end_date"));
+                booking.setStartDate(rs.getString("start_date"));
+                booking.setEndDate(rs.getString("end_date"));
                 booking.setRideType(rs.getString("ride_type"));
                 booking.setPickup(rs.getString("pickup"));
                 booking.setDestination(rs.getString("destination"));
                 booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getDate("returned_date"));
+                booking.setReturnedDate(rs.getString("returned_date"));
                 booking.setBookingStatus(rs.getString("booking_status"));
                 booking.setIsDeleted(rs.getInt("is_deleted"));
 
@@ -74,13 +74,13 @@ public class BookingDaoImpl implements BookingDao {
                 booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
                 booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
                 booking.setBookingDate(rs.getDate("booking_date"));
-                booking.setStartDate(rs.getDate("start_date"));
-                booking.setEndDate(rs.getDate("end_date"));
+                booking.setStartDate(rs.getString("start_date"));
+                booking.setEndDate(rs.getString("end_date"));
                 booking.setRideType(rs.getString("ride_type"));
                 booking.setPickup(rs.getString("pickup"));
                 booking.setDestination(rs.getString("destination"));
                 booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getDate("returned_date"));
+                booking.setReturnedDate(rs.getString("returned_date"));
                 booking.setBookingStatus(rs.getString("booking_status"));
                 booking.setIsDeleted(rs.getInt("is_deleted"));
 
@@ -98,8 +98,8 @@ public class BookingDaoImpl implements BookingDao {
     public Integer saveBooking(Booking booking) {
         String sql = "insert into Booking (booking_id, customer_id, driver_id, vehicle_id, booking_date, "
                 +"start_date, end_date, ride_type, pickup, destination, booking_type, returned_date, "
-                + "booking_status, is_deleted) "
-                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,'0')";
+                + "booking_status, created_date, created_by, modified_date, modified_by, is_deleted) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'0')";
         Integer rowsAffected = 0;
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -109,16 +109,19 @@ public class BookingDaoImpl implements BookingDao {
             statement.setInt(2, booking.getCustomer().getUserId());
             statement.setInt(3, booking.getDriver().getUserId());
             statement.setInt(4, booking.getVehicle().getVehicleId());
-            statement.setDate(5, booking.getBookingDate());
-            statement.setDate(6, booking.getStartDate());
-            statement.setDate(7, booking.getEndDate());
+            statement.setDate(5, new java.sql.Date(booking.getBookingDate().getTime()));
+            statement.setString(6, booking.getStartDate());
+            statement.setString(7, booking.getEndDate());
             statement.setString(8, booking.getRideType());
             statement.setString(9, booking.getPickup());
             statement.setString(10, booking.getDestination());
             statement.setString(11, booking.getBookingType());
-            statement.setDate(12, booking.getReturnedDate());
+            statement.setString(12, booking.getReturnedDate());
             statement.setString(13, booking.getBookingStatus());
-            statement.setInt(14, booking.getIsDeleted());
+            statement.setDate(14, booking.getCreatedDate());
+            statement.setString(15, booking.getCreatedBy());
+            statement.setDate(16, booking.getModifiedDate());
+            statement.setString(17, booking.getModifiedBy());
 
             rowsAffected = statement.executeUpdate();
 
@@ -132,22 +135,25 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public Integer updateBooking(Booking booking) {
-        String sql = "UPDATE Booking SET start_date = ?, end_date = ?, pickup = ?, destination = ?, booking_type = ?"
-        + "returned_date = ?, booking_status = ? WHERE booking_id = ?";
+        String sql = "UPDATE Booking SET start_date = ?, end_date = ?, pickup = ?, destination = ?, booking_type = ?, "
+        + "returned_date = ?, booking_status = ?, modified_date = ?, modified_by = ? WHERE booking_id = ?";
         
-        int rowsAffected = 0;
+        Integer rowsAffected = 0;
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setDate(1, booking.getStartDate());
-            statement.setDate(2, booking.getEndDate());
+            statement.setString(1, booking.getStartDate());
+            statement.setString(2, booking.getEndDate());
             statement.setString(3, booking.getPickup());
             statement.setString(4, booking.getDestination());
             statement.setString(5, booking.getBookingType());
-            statement.setDate(6, booking.getReturnedDate());
+            statement.setString(6, booking.getReturnedDate());
             statement.setString(7, booking.getBookingStatus());
-            
+            statement.setDate(8, new java.sql.Date(booking.getModifiedDate().getTime()));
+            statement.setString(9, booking.getModifiedBy());
+            statement.setInt(10, booking.getBookingId());
+
             rowsAffected = statement.executeUpdate();
 
         } catch (SQLException sqlException) {
@@ -198,13 +204,13 @@ public class BookingDaoImpl implements BookingDao {
                 booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
                 booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
                 booking.setBookingDate(rs.getDate("booking_date"));
-                booking.setStartDate(rs.getDate("start_date"));
-                booking.setEndDate(rs.getDate("end_date"));
+                booking.setStartDate(rs.getString("start_date"));
+                booking.setEndDate(rs.getString("end_date"));
                 booking.setRideType(rs.getString("ride_type"));
                 booking.setPickup(rs.getString("pickup"));
                 booking.setDestination(rs.getString("destination"));
                 booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getDate("returned_date"));
+                booking.setReturnedDate(rs.getString("returned_date"));
                 booking.setBookingStatus(rs.getString("booking_status"));
                 booking.setIsDeleted(rs.getInt("is_deleted"));
         

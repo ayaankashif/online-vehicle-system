@@ -3,119 +3,184 @@ package com.vehcalRentalSystem.service;
 import com.vehcalRentalSystem.dao.UsersDao;
 import com.vehcalRentalSystem.daoimpl.UserDaoImpl;
 import com.vehcalRentalSystem.model.Users;
-
 import java.util.Scanner;
 
 public class Menu {
-
+    bookingBusinessImpl bookingBusinessImpl = new bookingBusinessImpl();
+    UserBusinessImpl usersmenu = new UserBusinessImpl();
     UsersDao usersDaoImpl = new UserDaoImpl();
+    VehicleBusinessImpl vehicleMenu = new VehicleBusinessImpl();
+    DriverBusinessImpl driverBusinessImpl = new DriverBusinessImpl();
 
-    public void registerCustomer(){
+    public void loginMenu() {
         System.out.println("Sign up or login \n1: Sign up \n2: Login");
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();
-        
+
         switch (choice) {
             case "1":
-                signUp();
+                usersmenu.signUp();
+                login();
+                break;
             case "2":
-                loginMenu();
+                login();
+                break;
             default:
                 System.out.println("Incorrect choice, Try again!!!");
                 break;
         }
         scanner.close();
     }
-
-    public void signUp() {
-        System.out.println("Your Full Name");
-        Scanner scanner = new Scanner(System.in);
-        String name = scanner.nextLine();
-        System.out.println("Contact: ");
-        String contact = scanner.nextLine();
-        System.out.println("NIC: ");
-        String nic = scanner.nextLine();
-        System.out.println("Address: ");
-        String address = scanner.nextLine();
-        System.out.println("Email: ");
-        String email = scanner.nextLine();
-        System.out.println("UserType: ");
-        String userType = scanner.nextLine(); 
-        System.out.println("Your Passsword");
-        String pass = scanner.nextLine();
-        Users user = new Users(name, contact, nic, address, email, userType, pass);
-        
-        if(usersDaoImpl.saveUser(user) != null){
-            System.out.println("Registration completed");
-            loginMenu();
-        }else {
-            System.out.println("Fill out all the fields");
-        }
-        scanner.close();
-    }
-
-    public void registerDriver(){
-        System.out.println("Your Full Name");
-        Scanner scanner = new Scanner(System.in);
-        String name = scanner.nextLine();
-        System.out.println("Contact: ");
-        String contact = scanner.nextLine();
-        System.out.println("Driver License Number: ");
-        String licenseNo = scanner.nextLine();
-        System.out.println("NIC: ");
-        String nic = scanner.nextLine();
-        System.out.println("Address: ");
-        String address = scanner.nextLine();
-        System.out.println("Email: ");
-        String email = scanner.nextLine();
-        System.out.println("UserType: ");
-        String userType = scanner.nextLine(); 
-        Users user = new Users(name, contact, licenseNo, nic, address, email, userType);
-
-        if(usersDaoImpl.saveUser(user) != null){
-            System.out.println("Driver Registered");
-        }else {
-            System.out.println("Fill out all the fields");
-        }
-        scanner.close();
-    }
     
-    public void loginMenu(){
+    public void login() {
         System.out.println("Welcome To Online Vehicle Rental System.\n");
         System.out.println("Insert Username: ");
         Scanner scanner = new Scanner(System.in);
         String userName = scanner.nextLine();
         System.out.println("Insert Password: ");
         String password = scanner.nextLine();
-        Users users = usersDaoImpl.userLogin(userName,password);
-        if(users != null){
-            MainMenu(users);
-        }else {
+        Users users = usersDaoImpl.userLogin(userName, password);
+
+        if (users != null) {
+            switch (users.getUserType()) {
+                case "customer":
+                    userMenu(users);
+                    break;
+                case "admin":
+                    adminMenu();
+                    break;
+                case "driver":
+                    driverMenu(users);
+                    break;
+                default:
+                    System.out.println("No Record Found");
+                    break;
+            }
+        } else {
             System.out.println("Incorrect Login Information. Please Try Again!!!");
             loginMenu();
         }
         scanner.close();
     }
 
-    public void MainMenu(Users users){
-        System.out.println("Online Vehicle Rental System.\n");
+    public void userMenu(Users user) {
+        System.out.println("\nOnline Vehicle Rental System.\nCustomer Menu\n");
         System.out.println("1. Booking");
         System.out.println("2. Booking History");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Input Choice: " );
+        System.out.println("Input Choice: ");
         String input = scanner.nextLine();
 
-        switch (input){
+        switch (input) {
             case "1":
-                System.out.println("Booking Implementation");
-                MainMenu(users);
+                bookingBusinessImpl.bookingImpl(user);
+                userMenu(user);
+                break;
             case "2":
-                System.out.println("Booking History");
-                MainMenu(users);
+                bookingBusinessImpl.bookingHistory(user);
+                userMenu(user);
+                break;
             default:
                 System.out.println("Invalid Choice!!!, Try Again");
-                MainMenu(users);
+                userMenu(user);
+                break;
         }
         scanner.close();
     }
+
+    public void adminMenu() {
+        System.out.println("\nOnline Vehicle Rental System\nAdmin menu\n");
+        System.out.println("1: Register Driver");
+        System.out.println("2: Customer Details");
+        System.out.println("3: Vehicle Section");
+        System.out.println("4: Booking Details");
+        System.out.println("5: Payments Details");
+        System.out.println("6: Maintenance Details");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                usersmenu.registerDriver();
+                adminMenu();
+                break;
+            case 2:
+                usersmenu.showCustomer();
+                adminMenu();
+                break;
+            case 3:
+                vehicleMenu();
+                adminMenu();
+                break;
+            case 4:
+                //bookingBusinessImpl.bookingHistory();
+                adminMenu();
+                break;
+            case 5:
+                System.out.println("payments");
+                adminMenu();
+                break;
+            case 6:
+                System.out.println("mainteneace");
+                adminMenu();
+                break;
+            default:
+                System.out.println("Invalid choice");
+                break;
+        }
+        scanner.close();
+    }
+
+
+    public void vehicleMenu() {
+        System.out.println("\nOnline Vehicle Rental System\nVehicle Menu\n");
+        System.out.println("1: Register Vehicle");
+        System.out.println("2: Update vehicle");
+        System.out.println("3: All Vehicles");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                vehicleMenu.registerVehicle();
+                adminMenu();
+                break;
+            case 2:
+                vehicleMenu.updateVehicle();
+                adminMenu();
+                break;
+            case 3:
+                vehicleMenu.showVehicle();
+                adminMenu();
+                break;
+            default:
+                break;
+        }
+        scanner.close();
+    }
+
+    public void driverMenu(Users user) {
+        System.out.println("\nOnline Vehicle Rental System.\nDriver Menu\n");
+        System.out.println("1. Booking");;
+        System.out.println("2: Update Booking");
+        System.out.println("3: All Vehicles");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                driverBusinessImpl.driverImpl(user);
+                break;
+            case 2:
+                driverBusinessImpl.updateBooking(user);
+                break;
+            case 3:
+                System.out.println("book menu");
+                break;
+            default:
+                break;
+        }
+        scanner.close();
+    }
+
 }

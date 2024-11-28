@@ -1,29 +1,38 @@
 package com.vehcalRentalSystem;
 
-import com.vehcalRentalSystem.model.Users;
-//import com.vehcalRentalSystem.dao.UsersDao;
-//import com.vehcalRentalSystem.dao.VehicleDao;
-//import com.vehcalRentalSystem.daoimpl.UserDaoImpl;
+// import com.vehcalRentalSystem.dao.UsersDao;
+// import com.vehcalRentalSystem.dao.VehicleDao;
+// import com.vehcalRentalSystem.daoimpl.UserDaoImpl;
 // import com.vehcalRentalSystem.daoimpl.VehicleDaoImpl;
 // import com.vehcalRentalSystem.model.Users;
 // import com.vehcalRentalSystem.model.Vehicle;
 import com.vehcalRentalSystem.service.Menu;
-
+//import com.vehcalRentalSystem.service.UserMenu;
+//import com.vehcalRentalSystem.service.VehicleBusinessImpl;
 // import java.util.List;
 
 public class App 
 {
     public static void main( String[] args )
     {   
-        Users user = new Users();
-        Menu menu = new  Menu();
-        menu.registerCustomer();
-        menu.signUp();
-        menu.registerDriver();
+        //Users user = new Users();
+        Menu menu = new Menu();
         menu.loginMenu();
-        menu.MainMenu(user);
+        //UserMenu userMenu = new UserMenu();
+        //VehicleMenu vehicle = new  VehicleMenu();
+        //menu.adminMenu();
+        //menu.loginMenu();
 
+        //userMenu.registerCustomer();
         
+
+        // Menu menu = new  Menu();
+        // userMenu.signUp();
+        // userMenu.registerDriver();
+        // menu.loginMenu();
+
+
+
         // String str1 = "Hello";
         // String str2 = "Hello";
         // System.out.println("str1 == str2" + str1.equals(str2));

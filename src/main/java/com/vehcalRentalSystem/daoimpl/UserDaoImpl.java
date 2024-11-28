@@ -21,7 +21,7 @@ public class UserDaoImpl implements UsersDao {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(
                     "select user_id,user_name,contact_info,user_nic,user_type,address,email,"
-                    +"driver_license_number,created_date,modified_date,is_deleted "
+                    +"driver_license_number, password, created_date,modified_date,is_deleted "
                     +"from users where is_deleted = 0");
             while (rs.next()) {
                 Users user = new Users();
@@ -34,6 +34,7 @@ public class UserDaoImpl implements UsersDao {
                 user.setAddress(rs.getString("address"));
                 user.setEmail(rs.getString("email"));
                 user.setDriverLicenceNumber(rs.getString("driver_license_number"));
+                user.setPassword(rs.getString("password"));
                 user.setCreatedDate(rs.getDate("created_date"));
                 user.setCreatedDate(rs.getDate("modified_date"));
                 user.setIsDeleted(rs.getInt("is_deleted"));
@@ -51,8 +52,8 @@ public class UserDaoImpl implements UsersDao {
     @Override
     public Integer saveUser(Users user) {
         String sql = "insert into users (user_id, user_name, contact_info, user_nic, user_type, address, "
-                + "email, driver_license_number, created_date, modified_date, is_deleted) "
-                + "values (?,?,?,?,?,?,?,?,?,?,'0')";
+                + "email, driver_license_number, password, created_date, modified_date, is_deleted) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,'0')";
         Integer rowsAffected = 0;
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -66,9 +67,9 @@ public class UserDaoImpl implements UsersDao {
             statement.setString(6, user.getAddress());
             statement.setString(7, user.getEmail());
             statement.setString(8, user.getDriverLicenceNumber());
-            statement.setDate(9, user.getCreatedDate());
-            statement.setDate(10, user.getModifiedDate());
-            statement.setInt(11, user.getIsDeleted());
+            statement.setString(9, user.getPassword());
+            statement.setDate(10, new java.sql.Date(user.getCreatedDate().getTime()));
+            statement.setDate(11, user.getModifiedDate());
 
             rowsAffected = statement.executeUpdate();
 
@@ -82,7 +83,7 @@ public class UserDaoImpl implements UsersDao {
 
     @Override
     public Integer updateUser(Users user) {
-        String sql = "UPDATE users SET user_name = ?, contact_info = ?, user_nic = ?, address = ?, email = ?"
+        String sql = "UPDATE users SET user_name = ?, contact_info = ?, user_nic = ?, address = ?, email = ?, "
         + "driver_license_number = ?, modified_date = ? WHERE user_id = ?";
         
         int rowsAffected = 0;
@@ -96,6 +97,8 @@ public class UserDaoImpl implements UsersDao {
             statement.setString(4, user.getAddress());
             statement.setString(5, user.getEmail());
             statement.setString(6, user.getDriverLicenceNumber());
+            statement.setDate(7, new java.sql.Date(user.getModifiedDate().getTime()));
+            statement.setInt(8, user.getUserId());
             
             rowsAffected = statement.executeUpdate();
 
@@ -145,6 +148,7 @@ public class UserDaoImpl implements UsersDao {
                 user.setAddress(rs.getString("address"));
                 user.setEmail(rs.getString("email"));
                 user.setDriverLicenceNumber(rs.getString("driver_license_number"));
+                user.setPassword(rs.getString("password"));
                 user.setCreatedDate(rs.getDate("created_date"));
                 user.setModifiedDate(rs.getDate("modified_date"));
                 user.setIsDeleted(rs.getInt("is_deleted"));        
@@ -162,7 +166,7 @@ public class UserDaoImpl implements UsersDao {
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement("select user_id,user_name,contact_info,user_nic,user_type,address,email, "
-            +"driver_license_number,created_date,modified_date,is_deleted from users where user_name = ? and password = ?");
+            +"driver_license_number,password,created_date,modified_date,is_deleted from users where user_name = ? and password = ?");
             
             stmt.setString(1,username);
             stmt.setString(2,password);
@@ -178,6 +182,7 @@ public class UserDaoImpl implements UsersDao {
                 user.setAddress(rs.getString("address"));
                 user.setEmail(rs.getString("email"));
                 user.setDriverLicenceNumber(rs.getString("driver_license_number"));
+                user.setPassword(rs.getString("password"));
                 user.setCreatedDate(rs.getDate("created_date"));
                 user.setCreatedDate(rs.getDate("modified_date"));
                 user.setIsDeleted(rs.getInt("is_deleted"));

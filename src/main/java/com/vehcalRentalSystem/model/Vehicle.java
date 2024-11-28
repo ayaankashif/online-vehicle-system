@@ -1,19 +1,37 @@
 package com.vehcalRentalSystem.model;
 
+import java.sql.Date;
+
 public class Vehicle extends BaseModel{
 
-    private Integer vehicleId;
+	private Integer vehicleId;
+    private String vehicleType;
     private String make;
     private String model;
     private String variant;
     private String seats;
-    private String vehicleType;
     private String vehicleLicenceNumber;
-    private Integer isDeleted;
-
-
+    private String status;
+    private int isDeleted;
+    
     public Vehicle() {
     }
+
+    public Vehicle(String vehicleType, String make, String model, String variant, String seats, String vehicleLicenceNumber, String status, Date createdDate, String createdBy, Date modifiedDate, String modifiedBy, Integer vehicleId){
+    	this.vehicleId = vehicleId;
+        this.vehicleType = vehicleType;
+        this.make = make;
+        this.model = model;
+        this.variant = variant;
+        this.seats = seats;
+        this.vehicleLicenceNumber = vehicleLicenceNumber;
+        this.status = status;
+        this.createdDate = createdDate;
+        this.createdBy =createdBy;
+        this.modifiedDate = modifiedDate;
+        this.modifiedBy = modifiedBy;
+    }
+
 
     public Integer getVehicleId() {
 
@@ -72,11 +90,19 @@ public class Vehicle extends BaseModel{
         this.vehicleLicenceNumber = vehicleLicenceNumber;
     }
 
-    public Integer getIsDeleted() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
+    public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
     }
 }

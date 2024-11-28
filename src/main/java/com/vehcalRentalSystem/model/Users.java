@@ -12,14 +12,15 @@ public class Users extends BaseModel {
     private String driverLicenceNumber;
     private String email;
     private String userType;
-    private Integer isDeleted;
     private String password; 
+    private int isDeleted;
 
 
     public Users() {
     }
     
-    public Users(String userName, String contactInfo, String driverLicenceNumber, String userNic, String address, String email, String userType){
+    public Users(String userName, String contactInfo, String driverLicenceNumber, String userNic, String address, String email, String userType, String password,  Date createdDate, Date modifiedDate, Integer userId){
+    	this.userId = userId;
         this.userName = userName;
         this.contactInfo = contactInfo;
         this.driverLicenceNumber = driverLicenceNumber;
@@ -27,16 +28,7 @@ public class Users extends BaseModel {
         this.address = address;
         this.email = email;
         this.userType = userType;
-    }
-    
-    public Users(String userName, String contactInfo, String driverLicenceNumber, String userNic, String address, String email, String userType,String password ){
-        this(userName, contactInfo, driverLicenceNumber, userNic, address, email, userType);
         this.password = password;
-    }
-
-    public Users(Integer userId, String userName, String contactInfo, String userNic, String address, String driverLicenceNumber, String email, String userType, String password, Date createdDate, Date modifiedDate) {
-        this(userName,contactInfo,driverLicenceNumber,userNic,address,email,password,userType);
-        this.userId = userId;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
@@ -105,11 +97,11 @@ public class Users extends BaseModel {
         this.userType = userType;
     }
 
-    public Integer getIsDeleted() {
+    public int getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
+    public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
     }
 

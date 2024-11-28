@@ -8,19 +8,41 @@ public class Booking extends BaseModel {
     private Users driver;
     private Vehicle vehicle; 
     private Date bookingDate;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String rideType;
     private String pickup;
     private String destination;
     private String bookingType;
-    private Date returnedDate;
+    private String returnedDate;
     private String bookingStatus;
     private Integer isDeleted;
 
     
     public Booking() {
     }
+
+    public Booking(Integer bookingID, Users customer, Users driver,  Vehicle vehicle, Date bookingDate, String startDate, String endDate, String rideType, String pickup, String destination, 
+                String bookingType, String returnedDate, String bookingStatus, Date createdDate, Date modifiedDate, String modifiedBy ){
+        
+        this.bookingId = bookingID;
+        this.customer = customer;
+        this.driver = driver;
+        this.vehicle = vehicle;
+        this.bookingDate = bookingDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.rideType = rideType;
+        this.pickup = pickup;
+        this.destination = destination;
+        this.bookingDate = bookingDate;
+        this.returnedDate = returnedDate;
+        this.bookingStatus = bookingStatus;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+        this.modifiedBy = modifiedBy;
+    }
+
 
     public Integer getBookingId() {
         return bookingId;
@@ -62,19 +84,19 @@ public class Booking extends BaseModel {
         this.bookingDate = bookingDate;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -110,11 +132,11 @@ public class Booking extends BaseModel {
         this.bookingType = bookingType;
     }
 
-    public Date getReturnedDate() {
+    public String getReturnedDate() {
         return returnedDate;
     }
 
-    public void setReturnedDate(Date returnedDate) {
+    public void setReturnedDate(String returnedDate) {
         this.returnedDate = returnedDate;
     }
 
