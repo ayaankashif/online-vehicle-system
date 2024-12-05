@@ -46,7 +46,7 @@ public class PaymentDaoImpl implements PaymentsDao {
 
     @Override
     public Integer payment(Payments payments) {
-        String sql = "insert into payments ( payment_id, booking_id, amount, payment_date, payment_type, is_deleted) "
+        String sql = "insert into payments (payment_id, booking_id, amount, payment_date, payment_type, is_deleted) "
                 + "values (?,?,?,?,?,'0')";
         Integer rowsAffected = 0;
         try {
@@ -58,8 +58,7 @@ public class PaymentDaoImpl implements PaymentsDao {
             statement.setDouble(3, payments.getAmount());
             statement.setDate(4, payments.getPaymentDate());
             statement.setString(5, payments.getPaymentType());
-            statement.setInt(6, payments.getIsDeleted());
-
+            
             rowsAffected = statement.executeUpdate();
 
         } catch (SQLException sqlException) {

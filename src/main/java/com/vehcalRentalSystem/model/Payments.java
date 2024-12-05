@@ -14,6 +14,14 @@ public class Payments extends BaseModel{
     public Payments() {
     }
 
+    public Payments(Integer paymentId, Booking booking, Double amount, Date paymentDate, String paymentType) {
+        this.paymentId = paymentId;
+        this.booking = booking;
+        this.amount = amount;
+        this.paymentDate = paymentDate;
+        this.paymentType = paymentType;
+    }
+
     public Integer getPaymentId() {
         return paymentId;
     }

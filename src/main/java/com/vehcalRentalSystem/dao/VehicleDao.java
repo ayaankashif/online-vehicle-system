@@ -15,4 +15,8 @@ public interface VehicleDao {
     Integer deleteVehicle(Vehicle vehicle);
     
     Vehicle getVehicleById(int vehicleId);
+
+    Integer vehicleStatus(Vehicle vehicle);
+
+    Integer returnVehicle(Vehicle vehicle);
 }

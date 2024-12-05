@@ -17,4 +17,10 @@ public interface UsersDao {
      Users getUserbyId(int userId);
 
      Users userLogin(String username,String password);
+
+     Users getAvailableDriver();
+
+     List<Users> showDriverList();
+
+     Integer driverStatus(Users user);
 }

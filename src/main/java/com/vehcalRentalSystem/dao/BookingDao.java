@@ -1,12 +1,15 @@
 package com.vehcalRentalSystem.dao;
 
 import com.vehcalRentalSystem.model.Booking;
+import com.vehcalRentalSystem.model.Users;
 
 import java.util.List;
 
 public interface BookingDao {
 
     List<Booking> fetchAllBookings();
+    
+    List<Booking> fetchAllBookings(Users users);
     
     Integer saveBooking(Booking booking);
 

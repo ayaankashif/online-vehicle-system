@@ -22,7 +22,7 @@ public class VehicleDaoImpl implements VehicleDao {
             ResultSet rs = stmt.executeQuery(
                     "select vehicle_id,make,model,varient,seats,vehicle_type,vehicle_license_no, status, "
                     +"created_date,created_by,modified_date,modified_by,is_deleted "
-                    + "from vehicle where is_deleted = 0");
+                    + "from vehicle where is_deleted = 0 AND status = 'Available' ");
 
             while (rs.next()) {
                 Vehicle vehicle = new Vehicle();
@@ -171,5 +171,59 @@ public class VehicleDaoImpl implements VehicleDao {
         }
         return vehicle;
     }
-}
-    
+
+    @Override
+    public Integer vehicleStatus(Vehicle vehicle) {
+        String sql = "update vehicle set status = 'Rented' where vehicle_id = ?";
+        Integer rowsAffected = 0;
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,vehicle.getVehicleId());
+            rowsAffected =  statement.executeUpdate();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowsAffected;
+    }
+
+    @Override
+    public Integer returnVehicle(Vehicle vehicle) {
+        String sql = "update vehicle set status = 'Available' where vehicle_id = ?";
+        Integer rowsAffected = 0;
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,vehicle.getVehicleId());
+            rowsAffected =  statement.executeUpdate();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowsAffected;
+    }
+
+
+    // public Integer vehicleStatus(Vehicle vehicle) {
+    //     String sql = "select * from vehicle where status = 'Available' ";
+    //     Integer rowsAffected = 0;
+    //     try{
+    //         Connection connection = DatabaseConnection.getConnection();
+    //         PreparedStatement statement = connection.prepareStatement(sql);
+    //         ResultSet rs =  statement.executeQuery();
+
+    //         while (rs.next()) {
+                
+    //         }
+
+    //     }catch (SQLException sqlException){
+    //         sqlException.printStackTrace();
+    //     } catch (ClassNotFoundException e) {
+    //         throw new RuntimeException(e);
+    //     }
+    //     return rowsAffected;
+    // }
+}   

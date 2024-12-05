@@ -11,6 +11,13 @@ public class Maintenance extends BaseModel{
     public Maintenance() {
     }
 
+    public Maintenance(Integer maintenanceId, Vehicle vehicle, String maintenanceType, String maintenanceStatus ){
+        this.maintenanceId = maintenanceId;
+        this.vehicle = vehicle;
+        this.maintenanceType = maintenanceType;
+        this.maintenanceStatus = maintenanceStatus;
+    }
+
     public Integer getMaintenanceId() {
         return maintenanceId;
     }

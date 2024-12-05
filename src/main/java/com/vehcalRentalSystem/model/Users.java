@@ -13,13 +13,13 @@ public class Users extends BaseModel {
     private String email;
     private String userType;
     private String password; 
+    private Integer driverStatus;
     private int isDeleted;
-
-
+    
     public Users() {
     }
-    
-    public Users(String userName, String contactInfo, String driverLicenceNumber, String userNic, String address, String email, String userType, String password,  Date createdDate, Date modifiedDate, Integer userId){
+        
+    public Users(String userName, String contactInfo, String driverLicenceNumber, String userNic, String address, String email, String userType, String password,  Date createdDate, Date modifiedDate, Integer userId, Integer driverStatus){
     	this.userId = userId;
         this.userName = userName;
         this.contactInfo = contactInfo;
@@ -31,6 +31,7 @@ public class Users extends BaseModel {
         this.password = password;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.driverStatus = driverStatus;
     }
 
     public Integer getUserId() {
@@ -111,5 +112,13 @@ public class Users extends BaseModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getDriverStatus() {
+        return driverStatus;
+    }
+
+    public void setDriverStatus(Integer driverStatus) {
+        this.driverStatus = driverStatus;
     }
 }

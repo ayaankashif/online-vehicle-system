@@ -61,9 +61,7 @@ public class BookingDaoImpl implements BookingDao {
         List<Booking> bookingList = new ArrayList<>();
         try {
             Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("select booking_id, customer_id, driver_id, vehicle_id, booking_date, start_date, end_date,"
-                    +"ride_type, pickup, destination, booking_type, returned_date, booking_status, is_deleted "
-                    +"from Booking where is_deleted = 0 and user_id = ?");
+            PreparedStatement stmt = conn.prepareStatement("select booking_id, customer_id, driver_id, vehicle_id, booking_date, start_date, end_date, ride_type, pickup, destination, booking_type, returned_date, booking_status, is_deleted from Booking where is_deleted = 0 and customer_id = ?");
             stmt.setInt(1,users.getUserId());
             ResultSet rs = stmt.executeQuery();
 
@@ -107,7 +105,11 @@ public class BookingDaoImpl implements BookingDao {
 
             statement.setInt(1, booking.getBookingId());
             statement.setInt(2, booking.getCustomer().getUserId());
-            statement.setInt(3, booking.getDriver().getUserId());
+            if (booking.getDriver() == null) {
+                statement.setString(3, null);
+            } else {
+                statement.setInt(3, booking.getDriver().getUserId());
+            }
             statement.setInt(4, booking.getVehicle().getVehicleId());
             statement.setDate(5, new java.sql.Date(booking.getBookingDate().getTime()));
             statement.setString(6, booking.getStartDate());

@@ -23,7 +23,7 @@ public class Booking extends BaseModel {
     }
 
     public Booking(Integer bookingID, Users customer, Users driver,  Vehicle vehicle, Date bookingDate, String startDate, String endDate, String rideType, String pickup, String destination, 
-                String bookingType, String returnedDate, String bookingStatus, Date createdDate, Date modifiedDate, String modifiedBy ){
+                String bookingType, String returnedDate, String bookingStatus, Date createdDate, String createdBy, Date modifiedDate, String modifiedBy ){
         
         this.bookingId = bookingID;
         this.customer = customer;
@@ -35,10 +35,12 @@ public class Booking extends BaseModel {
         this.rideType = rideType;
         this.pickup = pickup;
         this.destination = destination;
+        this.bookingType = bookingType;
         this.bookingDate = bookingDate;
         this.returnedDate = returnedDate;
         this.bookingStatus = bookingStatus;
         this.createdDate = createdDate;
+        this.createdBy = createdBy;
         this.modifiedDate = modifiedDate;
         this.modifiedBy = modifiedBy;
     }

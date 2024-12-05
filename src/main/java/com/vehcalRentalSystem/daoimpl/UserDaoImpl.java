@@ -18,14 +18,11 @@ public class UserDaoImpl implements UsersDao {
         List<Users> usersList = new ArrayList<>();
         try {
             Connection conn = DatabaseConnection.getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(
-                    "select user_id,user_name,contact_info,user_nic,user_type,address,email,"
-                    +"driver_license_number, password, created_date,modified_date,is_deleted "
-                    +"from users where is_deleted = 0");
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(
+                    "select user_id,user_name,contact_info,user_nic,user_type,address,email,driver_license_number, password, created_date,modified_date,is_deleted,driver_status from users where is_deleted = 0 AND user_type = 'customer' ");
             while (rs.next()) {
                 Users user = new Users();
-
                 user.setUserId(rs.getInt("user_id"));
                 user.setUserName(rs.getString("user_name"));
                 user.setContactInfo(rs.getString("contact_info"));
@@ -38,7 +35,7 @@ public class UserDaoImpl implements UsersDao {
                 user.setCreatedDate(rs.getDate("created_date"));
                 user.setCreatedDate(rs.getDate("modified_date"));
                 user.setIsDeleted(rs.getInt("is_deleted"));
-
+                user.setDriverStatus(rs.getInt("driver_status"));
                 usersList.add(user);
             }
         } catch (ClassNotFoundException e) {
@@ -52,8 +49,8 @@ public class UserDaoImpl implements UsersDao {
     @Override
     public Integer saveUser(Users user) {
         String sql = "insert into users (user_id, user_name, contact_info, user_nic, user_type, address, "
-                + "email, driver_license_number, password, created_date, modified_date, is_deleted) "
-                + "values (?,?,?,?,?,?,?,?,?,?,?,'0')";
+                + "email, driver_license_number, password, driver_status, created_date, modified_date, is_deleted) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,'0')";
         Integer rowsAffected = 0;
         try {
             Connection connection = DatabaseConnection.getConnection();
@@ -68,8 +65,13 @@ public class UserDaoImpl implements UsersDao {
             statement.setString(7, user.getEmail());
             statement.setString(8, user.getDriverLicenceNumber());
             statement.setString(9, user.getPassword());
-            statement.setDate(10, new java.sql.Date(user.getCreatedDate().getTime()));
-            statement.setDate(11, user.getModifiedDate());
+            if (user.getDriverStatus() == null) {
+                statement.setString(10, null);
+            } else{
+                statement.setInt(10, user.getDriverStatus());
+            }
+            statement.setDate(11, new java.sql.Date(user.getCreatedDate().getTime()));
+            statement.setDate(12, user.getModifiedDate());
 
             rowsAffected = statement.executeUpdate();
 
@@ -194,5 +196,79 @@ public class UserDaoImpl implements UsersDao {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    @Override
+    public Users getAvailableDriver() {
+        Users user = new Users();
+        String sql = "select user_id, user_name, contact_info, user_nic, address, email, driver_license_number "
+        + "from users where driver_status = 1 ";
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {    
+                user.setUserId(rs.getInt("user_id"));
+                user.setUserName(rs.getString("user_name"));
+                user.setContactInfo(rs.getString("contact_info"));
+                user.setUserNic(rs.getString("user_nic"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setDriverLicenceNumber(rs.getString("driver_license_number"));
+            }
+
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+    
+    public List<Users> showDriverList() {
+        List<Users> driverList = new ArrayList<>();
+        String sql = "select user_id, user_name, contact_info, user_nic, address, email, driver_license_number "
+        + "from users where driver_status = 1 ";
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            
+            while (rs.next()) {
+                Users user = new Users();
+                user.setUserId(rs.getInt("user_id"));
+                user.setUserName(rs.getString("user_name"));
+                user.setContactInfo(rs.getString("contact_info"));
+                user.setUserNic(rs.getString("user_nic"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setDriverLicenceNumber(rs.getString("driver_license_number"));
+                driverList.add(user);
+            }
+
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return driverList;
+    }
+
+    @Override
+    public Integer driverStatus(Users user) {
+        String sql = "update Users set driver_status = 0 where user_id = ? ";
+        Integer rowsAffected = 0;
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, user.getUserId());
+            rowsAffected = statement.executeUpdate();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowsAffected;
     }
 }

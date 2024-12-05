@@ -10,11 +10,15 @@ import com.vehcalRentalSystem.service.Menu;
 //import com.vehcalRentalSystem.service.UserMenu;
 //import com.vehcalRentalSystem.service.VehicleBusinessImpl;
 // import java.util.List;
+//import com.vehcalRentalSystem.util.validation;
 
 public class App 
 {
-    public static void main( String[] args )
-    {   
+    public static void main( String[] args ) {       
+
+        // String str = "Moreamore234gmail.com";
+        // validation validation = new validation();
+        // System.out.println(validation.passwordStrength(str));
         //Users user = new Users();
         Menu menu = new Menu();
         menu.loginMenu();
@@ -22,6 +26,13 @@ public class App
         //VehicleMenu vehicle = new  VehicleMenu();
         //menu.adminMenu();
         //menu.loginMenu();
+
+        // String str = "Waqas_";
+        // System.out.println(validation.isValidUserName(str));
+        // String str1 = "Ayaan #";
+        // System.out.println(validation.isValidUserName(str1));
+        // String str2 = "Talha231";
+        // System.out.println(validation.isValidUserName(str2));
 
         //userMenu.registerCustomer();
         

@@ -19,33 +19,44 @@ public class bookingBusinessImpl {
     VehicleDao vehicleDao = new VehicleDaoImpl();
     BookingDao bookingDao = new BookingDaoImpl();
     VehicleBusinessImpl vehicleBusinessImpl = new VehicleBusinessImpl();
+    UserBusinessImpl userBusinessImpl = new UserBusinessImpl();
+    Vehicle vehicle = new Vehicle();
 
     public void bookingImpl(Users users) {
-        System.out.println("Start Date: ");
+        System.out.println("Do you want to book a driver ? YES | NO");
         Scanner scanner = new Scanner(System.in);
+        String isDriverRequired = scanner.nextLine();
+        String bookType;
+        Users driver = null;
+        if (isDriverRequired.equalsIgnoreCase("YES")) {
+            driver = usersDao.getAvailableDriver();
+            usersDao.driverStatus(driver);
+            bookType = "With Driver";
+        } else
+        bookType = "Indivisual";
+        System.out.println("Start Date: ");
         String startDate = scanner.nextLine();
         System.out.println("End Date : ");
         String endDate = scanner.nextLine();
+        System.out.println("Starting Journey: ");
+        String pickup = scanner.nextLine();
+        System.out.println("Destination: ");
+        String dest = scanner.nextLine();
         System.out.println("Ride Type: ");
         String rideType = scanner.nextLine();
-        System.out.println("Booking Type: ");
-        String bookType = scanner.nextLine();
         System.out.println("Booking Status");
         String status = scanner.nextLine();
         System.out.println("Booking ID: ");
         Integer id = scanner.nextInt();
-        System.out.println("User ID: ");
-        Integer Userid = scanner.nextInt();
         vehicleBusinessImpl.showVehicle();
         System.out.println("Select your Vehicle by ID: ");
         Integer vehicleId = scanner.nextInt();
+        vehicle = vehicleDao.getVehicleById(vehicleId);
+        vehicleDao.vehicleStatus(vehicle);
 
-        users = usersDao.getUserbyId(Userid);
-        Vehicle vehicle = vehicleDao.getVehicleById(vehicleId);
-
-        Booking booking = new Booking(id, users, null, vehicle, new Date(System.currentTimeMillis()),
-                startDate, endDate, rideType, null, null, bookType, null, status, new Date(System.currentTimeMillis()),
-                null, null);
+        Booking booking = new Booking(id, users, driver, vehicle, new Date(System.currentTimeMillis()),
+                startDate, endDate, rideType, pickup, dest, bookType, null, status, new Date(System.currentTimeMillis()),
+                users.getUserName(), null, null);
 
         if (bookingDao.saveBooking(booking) != null) {
             System.out.println("Booking Successfull");
@@ -67,17 +78,17 @@ public class bookingBusinessImpl {
         String retDate = scanner.nextLine();
         System.out.println("Booking Status: ");
         String status = scanner.nextLine();
+        System.out.println("Starting point ");
+        String pickup = scanner.nextLine();
+        System.out.println("End Point: ");
+        String dest = scanner.nextLine();
         System.out.println("Modified By: ");
         String modifyBy = scanner.nextLine();
         System.out.println("Booking ID: ");
         Integer id = scanner.nextInt();
-        System.out.println("User ID: ");
-        Integer userId = scanner.nextInt();
 
-        Users user = usersDao.getUserbyId(userId);
-
-        Booking booking = new Booking(id, user, null, null, null,
-                startDate, endDate, null, null, null, bookType, retDate, status, null,
+        Booking booking = new Booking(id, users, null, null, null,
+                startDate, endDate, null, pickup, dest, bookType, retDate, status, null, null,
                 new Date(System.currentTimeMillis()), modifyBy);
 
         if (bookingDao.updateBooking(booking) != null) {
@@ -89,20 +100,19 @@ public class bookingBusinessImpl {
     }
 
     public void bookingHistory(Users users) {
-        List<Booking> bookingList = bookingDao.fetchAllBookings();
+        List<Booking> bookingList = bookingDao.fetchAllBookings(users);
         System.out.println("Booking List");
         for (Booking booking : bookingList) {
             System.out.println(String.format(
-                    "Booking ID %s\nCustomer ID: %s\nVehicle Id: %s\nBooking Date: %s\n"
-                            + "Start Date: %s\nEnd Date: %s\nRide type: %s\nPickup: %s\nDestination: %s\nBooking Type: %s\n"
-                            + "Booking Status: %s\n",
+                    "Booking ID %s\nCustomer ID: %s\nVehicle Id: %s\nUser name: %s\nContact: %s\nUser NIC: %s\nAddress: %s\nEmail: %s\nCreated Date: %s\n"
+                            + "Vehicle Type: %s\nMake: %s\nModel: %s\nVariant: %s\nSeats: %s\nLicense Number: %s\nStatus: %s\nCreated Date: %s\n"
+                            + "Booking Date: %s\nStart Date: %s\nEnd Date: %s\nRide type: %s\nPickup: %s\nDestination: %s\nBooking Type: %s\nBooking Status: %s\n",
                     booking.getBookingId(),
                     booking.getCustomer().getUserId(),
                     booking.getVehicle().getVehicleId(),
                     booking.getCustomer().getUserName(),
                     booking.getCustomer().getContactInfo(),
                     booking.getCustomer().getUserNic(),
-                    booking.getCustomer().getUserType(),
                     booking.getCustomer().getAddress(),
                     booking.getCustomer().getEmail(),
                     booking.getCustomer().getCreatedDate(),
@@ -114,7 +124,6 @@ public class bookingBusinessImpl {
                     booking.getVehicle().getVehicleLicenceNumber(),
                     booking.getVehicle().getStatus(),
                     booking.getVehicle().getCreatedDate(),
-                    booking.getVehicle().getCreatedBy(),
                     booking.getBookingDate(),
                     booking.getStartDate(),
                     booking.getEndDate(),
@@ -126,4 +135,42 @@ public class bookingBusinessImpl {
             ));
         }
     }
+
+    public void bookingHistory() {
+        List<Booking> bookingList = bookingDao.fetchAllBookings();
+        System.out.println("Booking List");
+        for (Booking booking : bookingList) {
+            System.out.println(String.format(
+                    "Booking ID %s\nCustomer ID: %s\nVehicle Id: %s\nUser name: %s\nContact: %s\nUser NIC: %s\nAddress: %s\nEmail: %s\nCreated Date: %s\n"
+                            + "Vehicle Type: %s\nMake: %s\nModel: %s\nVariant: %s\nSeats: %s\nLicense Number: %s\nStatus: %s\nCreated Date: %s\n"
+                            + "Booking Date: %s\nStart Date: %s\nEnd Date: %s\nRide type: %s\nPickup: %s\nDestination: %s\nBooking Type: %s\nBooking Status: %s\n",
+                    booking.getBookingId(),
+                    booking.getCustomer().getUserId(),
+                    booking.getVehicle().getVehicleId(),
+                    booking.getCustomer().getUserName(),
+                    booking.getCustomer().getContactInfo(),
+                    booking.getCustomer().getUserNic(),
+                    booking.getCustomer().getAddress(),
+                    booking.getCustomer().getEmail(),
+                    booking.getCustomer().getCreatedDate(),
+                    booking.getVehicle().getVehicleType(),
+                    booking.getVehicle().getMake(),
+                    booking.getVehicle().getModel(),
+                    booking.getVehicle().getVariant(),
+                    booking.getVehicle().getSeats(),
+                    booking.getVehicle().getVehicleLicenceNumber(),
+                    booking.getVehicle().getStatus(),
+                    booking.getVehicle().getCreatedDate(),
+                    booking.getBookingDate(),
+                    booking.getStartDate(),
+                    booking.getEndDate(),
+                    booking.getRideType(),
+                    booking.getPickup(),
+                    booking.getDestination(),
+                    booking.getBookingType(),
+                    booking.getBookingStatus()
+            ));
+        }
+    }
+
 }
