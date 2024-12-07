@@ -213,7 +213,6 @@ public class bookingBusinessImpl {
         Integer id = scanner.nextInt();
         Booking booking = bookingDao.getBookingbyId(id);
         booking.setBookingStatus("Complete");
-        
         usersDao.driverStatus(booking.getDriver(), 1);
         vehicleDao.returnVehicle(booking.getVehicle());
 
