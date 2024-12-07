@@ -14,7 +14,7 @@ public class Booking extends BaseModel {
     private String pickup;
     private String destination;
     private String bookingType;
-    private String returnedDate;
+    private Date returnedDate;
     private String bookingStatus;
     private Integer isDeleted;
 
@@ -23,7 +23,7 @@ public class Booking extends BaseModel {
     }
 
     public Booking(Integer bookingID, Users customer, Users driver,  Vehicle vehicle, Date bookingDate, String startDate, String endDate, String rideType, String pickup, String destination, 
-                String bookingType, String returnedDate, String bookingStatus, Date createdDate, String createdBy, Date modifiedDate, String modifiedBy ){
+                String bookingType, Date returnedDate, String bookingStatus, Date createdDate, String createdBy, Date modifiedDate, String modifiedBy ){
         
         this.bookingId = bookingID;
         this.customer = customer;
@@ -134,11 +134,11 @@ public class Booking extends BaseModel {
         this.bookingType = bookingType;
     }
 
-    public String getReturnedDate() {
+    public Date getReturnedDate() {
         return returnedDate;
     }
 
-    public void setReturnedDate(String returnedDate) {
+    public void setReturnedDate(Date returnedDate) {
         this.returnedDate = returnedDate;
     }
 

@@ -1,5 +1,6 @@
 package com.vehcalRentalSystem;
 
+import com.vehcalRentalSystem.model.Users;
 // import com.vehcalRentalSystem.dao.UsersDao;
 // import com.vehcalRentalSystem.dao.VehicleDao;
 // import com.vehcalRentalSystem.daoimpl.UserDaoImpl;
@@ -7,10 +8,13 @@ package com.vehcalRentalSystem;
 // import com.vehcalRentalSystem.model.Users;
 // import com.vehcalRentalSystem.model.Vehicle;
 import com.vehcalRentalSystem.service.Menu;
+import com.vehcalRentalSystem.service.UserBusinessImpl;
 //import com.vehcalRentalSystem.service.UserMenu;
 //import com.vehcalRentalSystem.service.VehicleBusinessImpl;
 // import java.util.List;
 //import com.vehcalRentalSystem.util.validation;
+import com.vehcalRentalSystem.service.VehicleBusinessImpl;
+import com.vehcalRentalSystem.service.bookingBusinessImpl;
 
 public class App 
 {
@@ -19,9 +23,19 @@ public class App
         // String str = "Moreamore234gmail.com";
         // validation validation = new validation();
         // System.out.println(validation.passwordStrength(str));
-        //Users user = new Users();
+        //Users users = new Users();
         Menu menu = new Menu();
         menu.loginMenu();
+
+    
+        // bookingBusinessImpl bookingBusinessImpl = new bookingBusinessImpl();
+        // bookingBusinessImpl.bookingHistory();
+
+        // UserBusinessImpl userBusinessImpl = new  UserBusinessImpl();
+        // userBusinessImpl.showCustomer();
+        // System.out.println("\n\n");
+        // VehicleBusinessImpl vehcalRentalSystem = new VehicleBusinessImpl();
+        // vehcalRentalSystem.showVehicle();
         //UserMenu userMenu = new UserMenu();
         //VehicleMenu vehicle = new  VehicleMenu();
         //menu.adminMenu();

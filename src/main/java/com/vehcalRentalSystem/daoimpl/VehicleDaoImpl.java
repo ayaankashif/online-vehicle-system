@@ -22,7 +22,7 @@ public class VehicleDaoImpl implements VehicleDao {
             ResultSet rs = stmt.executeQuery(
                     "select vehicle_id,make,model,varient,seats,vehicle_type,vehicle_license_no, status, "
                     +"created_date,created_by,modified_date,modified_by,is_deleted "
-                    + "from vehicle where is_deleted = 0 AND status = 'Available' ");
+                    + "from vehicle where is_deleted = 0 AND status = 'Available'");
 
             while (rs.next()) {
                 Vehicle vehicle = new Vehicle();

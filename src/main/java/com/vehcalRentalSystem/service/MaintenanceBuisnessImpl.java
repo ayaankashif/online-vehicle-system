@@ -16,7 +16,7 @@ public class MaintenanceBuisnessImpl {
     MaintenanceDao maintenanceDao = new MaintenanceDaoImpl();
 
     public void maintenanceImpl(){
-
+        
         System.out.println("Maintenance Type: ");
         Scanner scanner = new Scanner(System.in);
         String type = scanner.nextLine();

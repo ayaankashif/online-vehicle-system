@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingDaoImpl implements BookingDao {
+    VehicleDao vehicleDao = new VehicleDaoImpl();
+    UsersDao usersDao = new UserDaoImpl();
     @Override
     public List<Booking> fetchAllBookings() {
-        UsersDao usersDao = new UserDaoImpl();
-        VehicleDao vehicleDao = new VehicleDaoImpl();
         List<Booking> bookingList = new ArrayList<>();
         try {
             Connection conn = DatabaseConnection.getConnection();
@@ -41,7 +41,7 @@ public class BookingDaoImpl implements BookingDao {
                 booking.setPickup(rs.getString("pickup"));
                 booking.setDestination(rs.getString("destination"));
                 booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getString("returned_date"));
+                booking.setReturnedDate(rs.getDate("returned_date"));
                 booking.setBookingStatus(rs.getString("booking_status"));
                 booking.setIsDeleted(rs.getInt("is_deleted"));
 
@@ -78,7 +78,7 @@ public class BookingDaoImpl implements BookingDao {
                 booking.setPickup(rs.getString("pickup"));
                 booking.setDestination(rs.getString("destination"));
                 booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getString("returned_date"));
+                booking.setReturnedDate(rs.getDate("returned_date"));
                 booking.setBookingStatus(rs.getString("booking_status"));
                 booking.setIsDeleted(rs.getInt("is_deleted"));
 
@@ -104,7 +104,11 @@ public class BookingDaoImpl implements BookingDao {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setInt(1, booking.getBookingId());
-            statement.setInt(2, booking.getCustomer().getUserId());
+            if (booking.getCustomer() == null) {
+                statement.setString(2, null);
+            } else {
+                statement.setInt(2, booking.getCustomer().getUserId());
+            }
             if (booking.getDriver() == null) {
                 statement.setString(3, null);
             } else {
@@ -118,9 +122,9 @@ public class BookingDaoImpl implements BookingDao {
             statement.setString(9, booking.getPickup());
             statement.setString(10, booking.getDestination());
             statement.setString(11, booking.getBookingType());
-            statement.setString(12, booking.getReturnedDate());
+            statement.setDate(12, new java.sql.Date(booking.getReturnedDate().getTime()));
             statement.setString(13, booking.getBookingStatus());
-            statement.setDate(14, booking.getCreatedDate());
+            statement.setDate(14, new java.sql.Date(booking.getCreatedDate().getTime()));
             statement.setString(15, booking.getCreatedBy());
             statement.setDate(16, booking.getModifiedDate());
             statement.setString(17, booking.getModifiedBy());
@@ -150,9 +154,9 @@ public class BookingDaoImpl implements BookingDao {
             statement.setString(3, booking.getPickup());
             statement.setString(4, booking.getDestination());
             statement.setString(5, booking.getBookingType());
-            statement.setString(6, booking.getReturnedDate());
+            statement.setDate(6, booking.getReturnedDate());
             statement.setString(7, booking.getBookingStatus());
-            statement.setDate(8, new java.sql.Date(booking.getModifiedDate().getTime()));
+            statement.setDate(8, booking.getModifiedDate());
             statement.setString(9, booking.getModifiedBy());
             statement.setInt(10, booking.getBookingId());
 
@@ -212,7 +216,7 @@ public class BookingDaoImpl implements BookingDao {
                 booking.setPickup(rs.getString("pickup"));
                 booking.setDestination(rs.getString("destination"));
                 booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getString("returned_date"));
+                booking.setReturnedDate(rs.getDate("returned_date"));
                 booking.setBookingStatus(rs.getString("booking_status"));
                 booking.setIsDeleted(rs.getInt("is_deleted"));
         
@@ -224,4 +228,52 @@ public class BookingDaoImpl implements BookingDao {
         }
         return booking;
     }
-}
+
+    public Booking bookingStatus() {
+        String sql = "select vehicle_id, driver_id from booking where booking_id = ?";
+        Booking booking = new Booking();
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, booking.getBookingId());
+            
+            ResultSet rs =  statement.executeQuery();
+
+            if (rs.next()) {
+                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
+                booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
+            }
+            
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return booking;
+    }
+
+
+    // public Booking getBooking(){
+    //     Booking booking = new Booking();
+    //     String sql = "select vehicle_id, booking_status from booking where booking_id = ? ";
+    //     try{
+    //         Connection connection = DatabaseConnection.getConnection();
+    //         PreparedStatement statement = connection.prepareStatement(sql);
+    //         statement.setInt(1, booking.getBookingId());
+    //         ResultSet rs = statement.executeQuery();
+    
+    //             if (rs.next()) {    
+    //                 booking.setBookingId(rs.getInt("vehicle_id"));
+    //                 booking.setBookingId(rs.getInt("booking_status"));
+    //             }
+    
+    //         } catch (SQLException sqlException){
+    //             sqlException.printStackTrace();
+    //         } catch (ClassNotFoundException e) {
+    //             throw new RuntimeException(e);
+    //         }
+    //         return booking;
+    //     }
+    }
+
