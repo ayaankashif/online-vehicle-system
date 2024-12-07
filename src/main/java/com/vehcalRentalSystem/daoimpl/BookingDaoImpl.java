@@ -229,51 +229,8 @@ public class BookingDaoImpl implements BookingDao {
         return booking;
     }
 
-    public Booking bookingStatus() {
-        String sql = "select vehicle_id, driver_id from booking where booking_id = ?";
-        Booking booking = new Booking();
-        try{
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setInt(1, booking.getBookingId());
-            
-            ResultSet rs =  statement.executeQuery();
+    //public Users activ
 
-            if (rs.next()) {
-                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
-                booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
-            }
-            
-        }catch (SQLException sqlException){
-            sqlException.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return booking;
-    }
-
-
-    // public Booking getBooking(){
-    //     Booking booking = new Booking();
-    //     String sql = "select vehicle_id, booking_status from booking where booking_id = ? ";
-    //     try{
-    //         Connection connection = DatabaseConnection.getConnection();
-    //         PreparedStatement statement = connection.prepareStatement(sql);
-    //         statement.setInt(1, booking.getBookingId());
-    //         ResultSet rs = statement.executeQuery();
-    
-    //             if (rs.next()) {    
-    //                 booking.setBookingId(rs.getInt("vehicle_id"));
-    //                 booking.setBookingId(rs.getInt("booking_status"));
-    //             }
-    
-    //         } catch (SQLException sqlException){
-    //             sqlException.printStackTrace();
-    //         } catch (ClassNotFoundException e) {
-    //             throw new RuntimeException(e);
-    //         }
-    //         return booking;
-    //     }
-    }
+}
 

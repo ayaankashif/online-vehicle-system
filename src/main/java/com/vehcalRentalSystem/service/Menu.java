@@ -10,7 +10,6 @@ public class Menu {
     UserBusinessImpl usersmenu = new UserBusinessImpl();
     UsersDao usersDaoImpl = new UserDaoImpl();
     VehicleBusinessImpl vehicleMenu = new VehicleBusinessImpl();
-    MaintenanceBuisnessImpl maintenanceBuisnessImpl = new MaintenanceBuisnessImpl();
 
     public void loginMenu() {
         System.out.println("Sign up or login \n1: Sign up \n2: Login");
@@ -48,7 +47,7 @@ public class Menu {
                     userMenu(users);
                     break;
                 case "admin":
-                    adminMenu();
+                    adminMenu(users);
                     break;
                 case "driver":
                     // driverMenu(users);
@@ -69,6 +68,7 @@ public class Menu {
         System.out.println("1. Booking");
         System.out.println("2. Booking History");
         System.out.println("3. Return Vehicle");
+        System.out.println("4. Cancel Booking");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Input Choice: ");
         String input = scanner.nextLine();
@@ -86,6 +86,10 @@ public class Menu {
                 bookingBusinessImpl.completeBooking(user);
                 userMenu(user);
                 break;
+            case "4":
+                bookingBusinessImpl.cancelBooking(user);
+                userMenu(user);
+                break;
             default:
                 System.out.println("Invalid Choice!!!, Try Again");
                 userMenu(user);
@@ -94,7 +98,7 @@ public class Menu {
         scanner.close();
     }
 
-    public void adminMenu() {
+    public void adminMenu(Users users) {
         System.out.println("\nOnline Vehicle Rental System\nAdmin menu\n");
         System.out.println("1: Register Driver");
         System.out.println("2: Customer Details");
@@ -108,23 +112,27 @@ public class Menu {
         switch (choice) {
             case 1:
                 usersmenu.registerDriver();
-                adminMenu();
+                adminMenu(users);
                 break;
             case 2:
                 usersmenu.showCustomer();
-                adminMenu();
+                adminMenu(users);
                 break;
             case 3:
-                vehicleMenu();
-                adminMenu();
+                vehicleMenu(users);
+                adminMenu(users);
                 break;
             case 4:
                 usersmenu.showDriver();
-                adminMenu();
+                adminMenu(users);
                 break;
             case 5:
                 bookingBusinessImpl.bookingHistory();
-                adminMenu();
+                adminMenu(users);
+                break;
+            case 6:
+                System.out.println("payments ");
+                adminMenu(users);
                 break;
             default:
                 System.out.println("Invalid choice");
@@ -133,7 +141,7 @@ public class Menu {
         scanner.close();
     }
 
-    public void vehicleMenu() {
+    public void vehicleMenu(Users users) {
         System.out.println("\nOnline Vehicle Rental System\nVehicle Menu\n");
         System.out.println("1: Register Vehicle");
         System.out.println("2: Update vehicle");
@@ -143,45 +151,21 @@ public class Menu {
 
         switch (choice) {
             case 1:
-                vehicleMenu.registerVehicle();
-                adminMenu();
+                vehicleMenu.registerVehicle(users);
+                adminMenu(users);
                 break;
             case 2:
-                vehicleMenu.updateVehicle();
-                adminMenu();
+                vehicleMenu.updateVehicle(users);
+                adminMenu(users);
                 break;
             case 3:
                 vehicleMenu.showVehicle();
-                adminMenu();
+                adminMenu(users);
                 break;
             default:
                 break;
         }
         scanner.close();
     }
-
-    // public void driverMenu(Users user) {
-    // System.out.println("\nOnline Vehicle Rental System.\nDriver Menu\n");
-    // System.out.println("1. Booking");;
-    // System.out.println("2: Update Booking");
-    // System.out.println("3: All Vehicles");
-    // Scanner scanner = new Scanner(System.in);
-    // int choice = scanner.nextInt();
-
-    // switch (choice) {
-    // case 1:
-    // driverBusinessImpl.driverImpl(user);
-    // break;
-    // case 2:
-    // driverBusinessImpl.updateBooking(user);
-    // break;
-    // case 3:
-    // System.out.println("book menu");
-    // break;
-    // default:
-    // break;
-    // }
-    // scanner.close();
-    // }
 
 }
