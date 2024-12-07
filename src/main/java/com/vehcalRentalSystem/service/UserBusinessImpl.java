@@ -96,9 +96,11 @@ public class UserBusinessImpl {
     public void showCustomer(){
         List<Users> userList = usersDaoImpl.findAllUsers();
         System.out.println("Customer's List:\n");
+        System.out.printf("%-12s %-12s %-15s %-17s %-15s %-18s %-10s%n",  
+        "User ID", "User Name" ,"Contact info", "NIC", "Address", "Email", "Created Date");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------");
         for (Users users : userList) {
-            System.out.println(String.format(
-                "User ID: %s\nUser Name: %s\nContact info: %s\nNIC: %s\nAddress: %s\nEmail: %s\nCreated Date: %s\n", 
+            System.out.printf("%-12s %-12s %-15s %-17s %-15s %-18s %-10s%n",
                 users.getUserId(),
                 users.getUserName(),
                 users.getContactInfo(),
@@ -106,24 +108,26 @@ public class UserBusinessImpl {
                 users.getAddress(),
                 users.getEmail(),
                 users.getCreatedDate()
-            ));
+            );
         }
     }
 
     public void showDriver(){
         List<Users> driverList = usersDaoImpl.showDriverList();
         System.out.println("Driver's List");
+        System.out.printf("%-15s %-12s %-15s %-15s %-15s %-17s %-10s%n",  
+        "Driver ID", "Name", "Contact Info", "Driver NIC", "Address", "Email", "Driver License Number");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------");
+
         for (Users users : driverList) {
-            System.out.println(String.format("Driver ID: %s\nName: %s\nContact Info: %s\nDriver NIC: %s\n"
-            + "Address: %s\nEmail: %s\nDriver License Number: %s\n",
+            System.out.printf("%-15s %-12s %-15s %-15s %-15s %-24s %-10s%n", 
             users.getUserId(),
             users.getUserName(),
             users.getContactInfo(),
             users.getUserNic(),
             users.getAddress(),
             users.getEmail(),
-            users.getDriverLicenceNumber()
-            ));
+            users.getDriverLicenceNumber());
         }
     }
 

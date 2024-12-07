@@ -79,10 +79,12 @@ public class VehicleBusinessImpl {
     public void showVehicle(){
         List<Vehicle> vehicleList = vehicleDao.fetchAllVehicles();
         System.out.println("Available Vehicle's List:\n");
+        System.out.printf("%-13s %-12s %-10s %-10s %-15s %-10s %-15s %-13s %-15s %-15s%n", 
+                      "Vehicle ID", "Type", "Make", "Model",  "Variant", "Seats", "License Plate", "Status", "Created date", "Created by");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+
         for (Vehicle vehicle : vehicleList) {
-            System.out.println(String.format(
-                "Vehicle ID: %S\nType: %s\nMake: %s\nModel: %s\nVariant: %s\nSeats: %s\n"
-                +"License Plate: %s\nStatus: %s\nCreated date: %s\nCreated by: %s\n", 
+            System.out.printf("%-13s %-12s %-10s %-10s %-15s %-10s %-15s %-13s %-15s %-15s%n",
                 vehicle.getVehicleId(),
                 vehicle.getVehicleType(), 
                 vehicle.getMake(), 
@@ -92,8 +94,7 @@ public class VehicleBusinessImpl {
                 vehicle.getVehicleLicenceNumber(), 
                 vehicle.getStatus(), 
                 vehicle.getCreatedDate(), 
-                vehicle.getCreatedBy()
-            ));
+                vehicle.getCreatedBy());
         }
     }
 }

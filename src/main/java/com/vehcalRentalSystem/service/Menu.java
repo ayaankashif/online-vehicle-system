@@ -83,7 +83,7 @@ public class Menu {
                 userMenu(user);
                 break;
             case "3":
-                maintenanceBuisnessImpl.maintenanceImpl();
+                bookingBusinessImpl.completeBooking(user);
                 userMenu(user);
                 break;
             default:
@@ -102,7 +102,6 @@ public class Menu {
         System.out.println("4: Driver Details");
         System.out.println("5: Booking Details");
         System.out.println("6: Payments Details");
-        System.out.println("7: Maintenance Details");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
 
@@ -125,10 +124,6 @@ public class Menu {
                 break;
             case 5:
                 bookingBusinessImpl.bookingHistory();
-                adminMenu();
-                break;
-            case 6:
-                System.out.println("mainteneace");
                 adminMenu();
                 break;
             default:

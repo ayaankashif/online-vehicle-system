@@ -256,13 +256,16 @@ public class UserDaoImpl implements UsersDao {
     }
 
     @Override
-    public Integer driverStatus(Users user) {
-        String sql = "update Users set driver_status = 0 where user_id = ? ";
+    public Integer driverStatus(Users user, Integer status) {
+        String sql = "update Users set driver_status = ? where user_id = ? ";
         Integer rowsAffected = 0;
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, user.getUserId());
+
+            statement.setInt(1, status);
+            statement.setInt(2, user.getUserId());
+
             rowsAffected = statement.executeUpdate();
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
