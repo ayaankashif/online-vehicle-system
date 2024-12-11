@@ -22,5 +22,5 @@ public interface UsersDao {
 
      List<Users> showDriverList();
 
-     Integer driverStatus(Users user, Integer status);
+     Integer driverStatus(Integer status, Users user);
 }

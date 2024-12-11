@@ -229,8 +229,25 @@ public class BookingDaoImpl implements BookingDao {
         return booking;
     }
 
+    public boolean hasActiveBooking(int userId) {
+        String sql = "SELECT COUNT(*) AS count FROM booking WHERE customer_id = ? AND booking_status = 'active'";
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet rs =  statement.executeQuery();
 
-    //public Users activ
+            if (rs.next()) {
+                return rs.getInt("count") > 0;
+            }
+            
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 
 }
 
