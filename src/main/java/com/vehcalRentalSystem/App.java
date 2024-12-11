@@ -24,9 +24,9 @@ public class App
         // validation validation = new validation();
         // System.out.println(validation.passwordStrength(str));
         //Users users = new Users();
+        
         Menu menu = new Menu();
         menu.loginMenu();
-
     
         // bookingBusinessImpl bookingBusinessImpl = new bookingBusinessImpl();
         // bookingBusinessImpl.bookingHistory();
