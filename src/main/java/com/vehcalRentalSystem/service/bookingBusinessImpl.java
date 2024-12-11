@@ -213,6 +213,7 @@ public class bookingBusinessImpl {
         Integer id = scanner.nextInt();
         Booking booking = bookingDao.getBookingbyId(id);
         booking.setBookingStatus("Complete");
+        booking.setReturnedDate(new Date(System.currentTimeMillis()));
         usersDao.driverStatus(booking.getDriver(), 1);
         vehicleDao.returnVehicle(booking.getVehicle());
 
@@ -224,7 +225,20 @@ public class bookingBusinessImpl {
         scanner.close();
     }
 
+    public void cancelBooking(Users users){
+        System.out.println("Enter your 'Booking ID' to cancel your Booking: ");
+        Scanner scanner = new Scanner(System.in);
+        Integer id = scanner.nextInt();
+        Booking booking = bookingDao.getBookingbyId(id);
+        booking.setBookingStatus("Canceled");
+        
+        if (bookingDao.updateBooking(booking) != null) {
+            System.out.println("Booking cancelled");
+        } else {
+            System.out.println("Cancelation Failed");
+        }
+        scanner.close();        
 
+    }
 
-    //booking cancel
 }

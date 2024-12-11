@@ -44,12 +44,10 @@ public class UserBusinessImpl {
         System.out.println("Email: ");
         String email = scanner.nextLine();
         validation.isValidEmail(email);
-        System.out.println("UserType: ");
-        String userType = scanner.nextLine();
         System.out.println("User ID: ");
     	Integer id = scanner.nextInt();
     	
-        Users user = new Users(userName, contact, null, nic, address, email, userType, pass, 
+        Users user = new Users(userName, contact, null, nic, address, email, "Customer", pass, 
         new Date(System.currentTimeMillis()), null, id, null);
 
         if (usersDaoImpl.saveUser(user) != null ) {
@@ -61,7 +59,7 @@ public class UserBusinessImpl {
     }
 
     public void registerDriver() {
-        System.out.println("Your Full Name");
+        System.out.println("Full Name");
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
         validation.isValidUserName(name);

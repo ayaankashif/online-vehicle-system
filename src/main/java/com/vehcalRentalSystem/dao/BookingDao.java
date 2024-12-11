@@ -19,8 +19,6 @@ public interface BookingDao {
     
     Booking getBookingbyId(int bookingId);
 
-    Booking bookingStatus();
-
-    //Booking getBooking();
+    
 }
 

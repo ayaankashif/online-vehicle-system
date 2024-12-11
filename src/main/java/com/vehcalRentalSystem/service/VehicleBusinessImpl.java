@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.vehcalRentalSystem.dao.VehicleDao;
 import com.vehcalRentalSystem.daoimpl.VehicleDaoImpl;
+import com.vehcalRentalSystem.model.Users;
 import com.vehcalRentalSystem.model.Vehicle;
 
 public class VehicleBusinessImpl {
@@ -14,7 +15,7 @@ public class VehicleBusinessImpl {
     UserBusinessImpl usersmenu = new UserBusinessImpl();
 
 
-    public void registerVehicle() {
+    public void registerVehicle(Users users) {
         Scanner scanner = new Scanner(System.in);
  
         System.out.print("Vehicle type: ");
@@ -31,8 +32,7 @@ public class VehicleBusinessImpl {
         String licenseNo = scanner.nextLine();
         System.out.print("Status: ");
         String status = scanner.nextLine();
-        System.out.print("Created by: ");
-        String createdBy = scanner.nextLine();
+        String createdBy = users.getUserName();
         System.out.print("Vehicle ID: ");
         Integer id = scanner.nextInt(); 
         
@@ -47,7 +47,7 @@ public class VehicleBusinessImpl {
         scanner.close();
     }
 
-    public void updateVehicle(){
+    public void updateVehicle(Users users) {
         
         System.out.print("Vehicle type: ");
         Scanner scanner = new Scanner(System.in);  
@@ -60,10 +60,9 @@ public class VehicleBusinessImpl {
         String variant = scanner.nextLine();
         System.out.print("Status: ");
         String status = scanner.nextLine();
-        System.out.print("Modified by: ");
-        String modifiedBy = scanner.nextLine();
         System.out.print("Vehicle ID: ");
         Integer id = scanner.nextInt(); 
+        String modifiedBy = users.getUserName();
 
         Vehicle vehicle = new Vehicle(type, make, model, variant, null, null, 
                 status, null, null, new Date(System.currentTimeMillis()), modifiedBy, id);
