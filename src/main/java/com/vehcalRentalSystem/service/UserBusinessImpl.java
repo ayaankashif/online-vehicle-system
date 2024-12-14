@@ -55,7 +55,6 @@ public class UserBusinessImpl {
         } else {
             System.out.println("Fill out all the fields");
         }
-        scanner.close();
     }
 
     public void registerDriver() {
@@ -88,7 +87,6 @@ public class UserBusinessImpl {
         } else {
             System.out.println("Fill out all the fields");
         }
-        scanner.close();
     }
 
     public void showCustomer(){

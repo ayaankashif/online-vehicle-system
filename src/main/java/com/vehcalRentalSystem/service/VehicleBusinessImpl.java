@@ -32,12 +32,11 @@ public class VehicleBusinessImpl {
         String licenseNo = scanner.nextLine();
         System.out.print("Status: ");
         String status = scanner.nextLine();
-        String createdBy = users.getUserName();
         System.out.print("Vehicle ID: ");
         Integer id = scanner.nextInt(); 
         
         Vehicle vehicle = new Vehicle(type, make, model, variant, seats, licenseNo, status,
-                new Date(System.currentTimeMillis()), createdBy, null, null, id);
+                new Date(System.currentTimeMillis()), users.getUserName(), null, null, id);
 
         if (vehicleDao.saveVehicle(vehicle) != null) {
             System.out.println("Vehicle Registered");
@@ -62,10 +61,9 @@ public class VehicleBusinessImpl {
         String status = scanner.nextLine();
         System.out.print("Vehicle ID: ");
         Integer id = scanner.nextInt(); 
-        String modifiedBy = users.getUserName();
 
         Vehicle vehicle = new Vehicle(type, make, model, variant, null, null, 
-                status, null, null, new Date(System.currentTimeMillis()), modifiedBy, id);
+                status, null, null, new Date(System.currentTimeMillis()), users.getUserName(), id);
 
         if (vehicleDao.updateVehicle(vehicle) != null) {
             System.out.println("Vehicle updated successfully");

@@ -122,9 +122,9 @@ public class BookingDaoImpl implements BookingDao {
             statement.setString(9, booking.getPickup());
             statement.setString(10, booking.getDestination());
             statement.setString(11, booking.getBookingType());
-            statement.setDate(12, new java.sql.Date(booking.getReturnedDate().getTime()));
+            statement.setDate(12, booking.getReturnedDate());
             statement.setString(13, booking.getBookingStatus());
-            statement.setDate(14, new java.sql.Date(booking.getCreatedDate().getTime()));
+            statement.setDate(14, booking.getCreatedDate());
             statement.setString(15, booking.getCreatedBy());
             statement.setDate(16, booking.getModifiedDate());
             statement.setString(17, booking.getModifiedBy());

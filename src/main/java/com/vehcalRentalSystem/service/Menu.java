@@ -43,7 +43,7 @@ public class Menu {
 
         if (users != null) {
             switch (users.getUserType()) {
-                case "customer":
+                case "Customer":
                     userMenu(users);
                     break;
                 case "admin":
@@ -64,12 +64,12 @@ public class Menu {
     }
 
     public void userMenu(Users user) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("\nOnline Vehicle Rental System.\nCustomer Menu\n");
         System.out.println("1. Booking");
         System.out.println("2. Booking History");
         System.out.println("3. Return Vehicle");
         System.out.println("4. Cancel Booking");
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Input Choice: ");
         String input = scanner.nextLine();
 
@@ -128,10 +128,6 @@ public class Menu {
                 break;
             case 5:
                 bookingBusinessImpl.bookingHistory();
-                adminMenu(users);
-                break;
-            case 6:
-                System.out.println("payments ");
                 adminMenu(users);
                 break;
             default:
