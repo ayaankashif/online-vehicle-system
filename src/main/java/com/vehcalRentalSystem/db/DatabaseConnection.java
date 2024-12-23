@@ -12,11 +12,11 @@ public class DatabaseConnection {
     private static final String password = "Cyb3r@234";
 
     private DatabaseConnection(){
-
+        
     }
     
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        if(conn == null){
+        if(conn == null) {
             //Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(jdbcUrl,userName,password);
         }

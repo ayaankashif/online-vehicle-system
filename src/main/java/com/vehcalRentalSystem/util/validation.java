@@ -3,11 +3,24 @@ package com.vehcalRentalSystem.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class validation {
+public class Validation {
     
     public boolean isValidUserName(String userName){
 
         String regex = "^[A-Za-z]\\w{5,29}$" ;
+        Pattern p = Pattern.compile(regex);
+        
+        if (userName == null) {
+            return false;
+        }
+
+        Matcher m = p.matcher(userName);
+        return m.matches();
+    }
+
+    public boolean isValidName(String userName){
+
+        String regex = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)";
         Pattern p = Pattern.compile(regex);
         
         if (userName == null) {
@@ -86,13 +99,7 @@ public class validation {
     }
 
     public boolean isValidEmail(String email){
-        
-        if (email.matches("(?=.*[@#$%^&+=]).*")) {
-            return true;
-        }
-        System.out.println("Enter valid Email address");
-        return false;
+        final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
+        return EMAIL_REGEX.matcher(email).matches();
     }
-
-
 }

@@ -4,16 +4,18 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vehcalRentalSystem.dao.VehicleDao;
 import com.vehcalRentalSystem.daoimpl.VehicleDaoImpl;
 import com.vehcalRentalSystem.model.Users;
 import com.vehcalRentalSystem.model.Vehicle;
 
 public class VehicleBusinessImpl {
-
+    static final Logger LOGGER = LogManager.getLogger(VehicleBusinessImpl.class);
     VehicleDao vehicleDao = new VehicleDaoImpl();
     UserBusinessImpl usersmenu = new UserBusinessImpl();
-
 
     public void registerVehicle(Users users) {
         Scanner scanner = new Scanner(System.in);
@@ -41,9 +43,8 @@ public class VehicleBusinessImpl {
         if (vehicleDao.saveVehicle(vehicle) != null) {
             System.out.println("Vehicle Registered");
         } else {
-            System.out.println("Vehicle Registration Failed");
+            LOGGER.info("Vehicle Registration Failed");
         }
-        scanner.close();
     }
 
     public void updateVehicle(Users users) {
@@ -63,14 +64,13 @@ public class VehicleBusinessImpl {
         Integer id = scanner.nextInt(); 
 
         Vehicle vehicle = new Vehicle(type, make, model, variant, null, null, 
-                status, null, null, new Date(System.currentTimeMillis()), users.getUserName(), id);
-
+        status, null, null, new Date(System.currentTimeMillis()), users.getUserName(), id);
+        
         if (vehicleDao.updateVehicle(vehicle) != null) {
             System.out.println("Vehicle updated successfully");
         } else {
-            System.out.println("Failed to update");
+            LOGGER.info("Failed to update");
         }
-        scanner.close();
     }
 
     public void showVehicle(){
