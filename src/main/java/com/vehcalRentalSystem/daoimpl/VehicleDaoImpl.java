@@ -3,6 +3,7 @@ package com.vehcalRentalSystem.daoimpl;
 import com.vehcalRentalSystem.dao.VehicleDao;
 import com.vehcalRentalSystem.db.DatabaseConnection;
 import com.vehcalRentalSystem.model.Vehicle;
+import com.vehcalRentalSystem.util.TableColumnConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,19 +28,19 @@ public class VehicleDaoImpl implements VehicleDao {
             while (rs.next()) {
                 Vehicle vehicle = new Vehicle();
 
-                vehicle.setVehicleId(rs.getInt("vehicle_id"));
-                vehicle.setMake(rs.getString("make"));
-                vehicle.setModel(rs.getString("model"));
-                vehicle.setVariant(rs.getString("varient"));
-                vehicle.setSeats(rs.getString("seats"));
-                vehicle.setVehicleType(rs.getString("vehicle_type"));
-                vehicle.setVehicleLicenceNumber(rs.getString("vehicle_license_no"));
-                vehicle.setStatus(rs.getString("status"));
-                vehicle.setCreatedDate(rs.getDate("created_date"));
-                vehicle.setModifiedDate(rs.getDate("modified_date"));
-                vehicle.setCreatedBy(rs.getString("created_by"));
-                vehicle.setModifiedBy(rs.getString("modified_by"));
-                vehicle.setIsDeleted(rs.getInt("is_deleted"));
+                vehicle.setVehicleId(rs.getInt(TableColumnConstant.VEHICLE_ID));
+                vehicle.setMake(rs.getString(TableColumnConstant.MAKE));
+                vehicle.setModel(rs.getString(TableColumnConstant.MODEL));
+                vehicle.setVariant(rs.getString(TableColumnConstant.VARIANT));
+                vehicle.setSeats(rs.getString(TableColumnConstant.SEATS));
+                vehicle.setVehicleType(rs.getString(TableColumnConstant.VEHICLE_TYPE));
+                vehicle.setVehicleLicenceNumber(rs.getString(TableColumnConstant.VEHICLE_LICENCE_NO));
+                vehicle.setStatus(rs.getString(TableColumnConstant.STATUS));
+                vehicle.setCreatedDate(rs.getDate(TableColumnConstant.CREATED_DATE));
+                vehicle.setModifiedDate(rs.getDate(TableColumnConstant.MODIFIED_DATE));
+                vehicle.setCreatedBy(rs.getString(TableColumnConstant.CREATED_BY));
+                vehicle.setModifiedBy(rs.getString(TableColumnConstant.MODIFIED_BY));
+                vehicle.setIsDeleted(rs.getInt(TableColumnConstant.IS_DELETED));
 
                 listVehicle.add(vehicle);
             }
@@ -150,19 +151,19 @@ public class VehicleDaoImpl implements VehicleDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 vehicle = new Vehicle();
-                vehicle.setVehicleId(rs.getInt("vehicle_id"));
-                vehicle.setMake(rs.getString("make"));
-                vehicle.setModel(rs.getString("model"));
-                vehicle.setVariant(rs.getString("varient"));
-                vehicle.setSeats(rs.getString("seats"));
-                vehicle.setVehicleType(rs.getString("vehicle_type"));
-                vehicle.setVehicleLicenceNumber(rs.getString("vehicle_license_no"));
-                vehicle.setStatus(rs.getString("status"));
-                vehicle.setCreatedDate(rs.getDate("created_date"));
-                vehicle.setCreatedBy(rs.getString("created_by"));
-                vehicle.setModifiedDate(rs.getDate("modified_date"));
-                vehicle.setModifiedBy(rs.getString("modified_by"));
-                vehicle.setIsDeleted(rs.getInt("is_deleted"));
+                vehicle.setVehicleId(rs.getInt(TableColumnConstant.VEHICLE_ID));
+                vehicle.setMake(rs.getString(TableColumnConstant.MAKE));
+                vehicle.setModel(rs.getString(TableColumnConstant.MODEL));
+                vehicle.setVariant(rs.getString(TableColumnConstant.VARIANT));
+                vehicle.setSeats(rs.getString(TableColumnConstant.SEATS));
+                vehicle.setVehicleType(rs.getString(TableColumnConstant.VEHICLE_TYPE));
+                vehicle.setVehicleLicenceNumber(rs.getString(TableColumnConstant.VEHICLE_LICENCE_NO));
+                vehicle.setStatus(rs.getString(TableColumnConstant.STATUS));
+                vehicle.setCreatedDate(rs.getDate(TableColumnConstant.CREATED_DATE));
+                vehicle.setModifiedDate(rs.getDate(TableColumnConstant.MODIFIED_DATE));
+                vehicle.setCreatedBy(rs.getString(TableColumnConstant.CREATED_BY));
+                vehicle.setModifiedBy(rs.getString(TableColumnConstant.MODIFIED_BY));
+                vehicle.setIsDeleted(rs.getInt(TableColumnConstant.IS_DELETED));
             }
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
@@ -196,7 +197,9 @@ public class VehicleDaoImpl implements VehicleDao {
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
+            
             statement.setInt(1,vehicle.getVehicleId());
+            
             rowsAffected =  statement.executeUpdate();
         }catch (SQLException sqlException){
             sqlException.printStackTrace();

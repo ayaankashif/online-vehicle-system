@@ -1,6 +1,12 @@
 package com.vehcalRentalSystem;
 
-import com.vehcalRentalSystem.model.Users;
+// import java.util.logging.LoggingMXBean;
+
+// import org.apache.logging.log4j.LogManager;
+// import org.apache.logging.log4j.Logger;
+
+// import com.mysql.cj.log.Log;
+//import com.vehcalRentalSystem.model.Users;
 // import com.vehcalRentalSystem.dao.UsersDao;
 // import com.vehcalRentalSystem.dao.VehicleDao;
 // import com.vehcalRentalSystem.daoimpl.UserDaoImpl;
@@ -8,26 +14,28 @@ import com.vehcalRentalSystem.model.Users;
 // import com.vehcalRentalSystem.model.Users;
 // import com.vehcalRentalSystem.model.Vehicle;
 import com.vehcalRentalSystem.service.Menu;
-import com.vehcalRentalSystem.service.UserBusinessImpl;
+// import com.vehcalRentalSystem.service.UserBusinessImpl;
 //import com.vehcalRentalSystem.service.UserMenu;
 //import com.vehcalRentalSystem.service.VehicleBusinessImpl;
 // import java.util.List;
-//import com.vehcalRentalSystem.util.validation;
-import com.vehcalRentalSystem.service.VehicleBusinessImpl;
-import com.vehcalRentalSystem.service.bookingBusinessImpl;
+
+// import com.vehcalRentalSystem.service.VehicleBusinessImpl;
+// import com.vehcalRentalSystem.service.bookingBusinessImpl;
 
 public class App 
 {
+    //private static final Logger LOGGER = LogManager.getLogger(App.class);
     public static void main( String[] args ) {       
 
-        // String str = "Moreamore234gmail.com";
+        //LOGGER.info("disao");
+        // String str = "Talha 2";
         // validation validation = new validation();
-        // System.out.println(validation.passwordStrength(str));
-        //Users users = new Users();
-        
+        // System.out.println(validation.isValidName(str));
+        // Users users = new Users();
+    
         Menu menu = new Menu();
         menu.loginMenu();
-    
+
         // bookingBusinessImpl bookingBusinessImpl = new bookingBusinessImpl();
         // bookingBusinessImpl.bookingHistory();
 

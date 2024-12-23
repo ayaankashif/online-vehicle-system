@@ -4,6 +4,7 @@ import com.vehcalRentalSystem.dao.BookingDao;
 import com.vehcalRentalSystem.dao.PaymentsDao;
 import com.vehcalRentalSystem.db.DatabaseConnection;
 import com.vehcalRentalSystem.model.Payments;
+import com.vehcalRentalSystem.util.TableColumnConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,12 +28,12 @@ public class PaymentDaoImpl implements PaymentsDao {
             while (rs.next()) {
                 Payments payments = new Payments();
 
-                payments.setPaymentId(rs.getInt("payment_id"));
-                payments.setBooking(bookingDao.getBookingbyId(rs.getInt("booking_id")));
+                payments.setPaymentId(rs.getInt(TableColumnConstant.PAYMENT_ID));
+                payments.setBooking(bookingDao.getBookingbyId(rs.getInt(TableColumnConstant.BOOKING_ID)));
                 payments.setAmount(rs.getDouble("amount"));
                 payments.setPaymentDate(rs.getDate("payment_date"));
                 payments.setPaymentType(rs.getString("payment_type"));
-                payments.setIsDeleted(rs.getInt("is_deleted"));
+                payments.setIsDeleted(rs.getInt(TableColumnConstant.IS_DELETED));
 
                 paymentList.add(payments);
             }
