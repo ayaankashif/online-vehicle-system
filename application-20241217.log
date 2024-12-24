@@ -1,0 +1,5 @@
+2024-12-17 21:26:30.610 [main] DEBUG com.vehcalRentalSystem.App - We've just greeted the user!
+2024-12-17 21:26:30.622 [main] INFO  com.vehcalRentalSystem.App - We've just greeted the user!
+2024-12-17 21:26:30.622 [main] WARN  com.vehcalRentalSystem.App - We've just greeted the user!
+2024-12-17 21:26:30.623 [main] ERROR com.vehcalRentalSystem.App - We've just greeted the user!
+2024-12-17 21:26:30.624 [main] FATAL com.vehcalRentalSystem.App - We've just greeted the user! 
