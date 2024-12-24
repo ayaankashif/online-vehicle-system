@@ -6,6 +6,7 @@ import com.vehcalRentalSystem.dao.VehicleDao;
 import com.vehcalRentalSystem.db.DatabaseConnection;
 import com.vehcalRentalSystem.model.Booking;
 import com.vehcalRentalSystem.model.Users;
+import com.vehcalRentalSystem.util.TableColumnConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,21 +31,20 @@ public class BookingDaoImpl implements BookingDao {
                    +"from Booking where is_deleted = 0");
             while (rs.next()) {
                 Booking booking = new Booking();
-                booking.setBookingId(rs.getInt("booking_id"));
-                booking.setCustomer(usersDao.getUserbyId(rs.getInt("customer_id")));
-                booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
-                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
-                booking.setBookingDate(rs.getDate("booking_date"));
-                booking.setStartDate(rs.getString("start_date"));
-                booking.setEndDate(rs.getString("end_date"));
-                booking.setRideType(rs.getString("ride_type"));
-                booking.setPickup(rs.getString("pickup"));
-                booking.setDestination(rs.getString("destination"));
-                booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getDate("returned_date"));
-                booking.setBookingStatus(rs.getString("booking_status"));
-                booking.setIsDeleted(rs.getInt("is_deleted"));
-
+                booking.setBookingId(rs.getInt(TableColumnConstant.BOOKING_ID));
+                booking.setCustomer(usersDao.getUserbyId(rs.getInt(TableColumnConstant.CUSTOMER_ID)));
+                booking.setDriver(usersDao.getUserbyId(rs.getInt(TableColumnConstant.DRIVER_ID)));
+                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt(TableColumnConstant.VEHICLE_ID)));
+                booking.setBookingDate(rs.getDate(TableColumnConstant.BOOKING_DATE));
+                booking.setStartDate(rs.getString(TableColumnConstant.START_DATE));
+                booking.setEndDate(rs.getString(TableColumnConstant.END_DATE));
+                booking.setRideType(rs.getString(TableColumnConstant.RIDE_TYPE));
+                booking.setPickup(rs.getString(TableColumnConstant.PICKUP));
+                booking.setDestination(rs.getString(TableColumnConstant.DESTINATION));
+                booking.setBookingType(rs.getString(TableColumnConstant.BOOKING_TYPE));
+                booking.setReturnedDate(rs.getDate(TableColumnConstant.RETURNED_DATE));
+                booking.setBookingStatus(rs.getString(TableColumnConstant.BOOKING_STATUS));
+                booking.setIsDeleted(rs.getInt(TableColumnConstant.IS_DELETED));
                 bookingList.add(booking);
             }
         } catch (ClassNotFoundException e) {
@@ -67,20 +67,20 @@ public class BookingDaoImpl implements BookingDao {
 
             while (rs.next()) {
                 Booking booking = new Booking();
-                booking.setBookingId(rs.getInt("booking_id"));
-                booking.setCustomer(usersDao.getUserbyId(rs.getInt("customer_id")));
-                booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
-                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
-                booking.setBookingDate(rs.getDate("booking_date"));
-                booking.setStartDate(rs.getString("start_date"));
-                booking.setEndDate(rs.getString("end_date"));
-                booking.setRideType(rs.getString("ride_type"));
-                booking.setPickup(rs.getString("pickup"));
-                booking.setDestination(rs.getString("destination"));
-                booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getDate("returned_date"));
-                booking.setBookingStatus(rs.getString("booking_status"));
-                booking.setIsDeleted(rs.getInt("is_deleted"));
+                booking.setBookingId(rs.getInt(TableColumnConstant.BOOKING_ID));
+                booking.setCustomer(usersDao.getUserbyId(rs.getInt(TableColumnConstant.CUSTOMER_ID)));
+                booking.setDriver(usersDao.getUserbyId(rs.getInt(TableColumnConstant.DRIVER_ID)));
+                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt(TableColumnConstant.VEHICLE_ID)));
+                booking.setBookingDate(rs.getDate(TableColumnConstant.BOOKING_DATE));
+                booking.setStartDate(rs.getString(TableColumnConstant.START_DATE));
+                booking.setEndDate(rs.getString(TableColumnConstant.END_DATE));
+                booking.setRideType(rs.getString(TableColumnConstant.RIDE_TYPE));
+                booking.setPickup(rs.getString(TableColumnConstant.PICKUP));
+                booking.setDestination(rs.getString(TableColumnConstant.DESTINATION));
+                booking.setBookingType(rs.getString(TableColumnConstant.BOOKING_TYPE));
+                booking.setReturnedDate(rs.getDate(TableColumnConstant.RETURNED_DATE));
+                booking.setBookingStatus(rs.getString(TableColumnConstant.BOOKING_STATUS));
+                booking.setIsDeleted(rs.getInt(TableColumnConstant.IS_DELETED));
 
                 bookingList.add(booking);
             }
@@ -205,20 +205,20 @@ public class BookingDaoImpl implements BookingDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 booking = new Booking();
-                booking.setBookingId(rs.getInt("booking_id"));
-                booking.setCustomer(usersDao.getUserbyId(rs.getInt("customer_id")));
-                booking.setDriver(usersDao.getUserbyId(rs.getInt("driver_id")));
-                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt("vehicle_id")));
-                booking.setBookingDate(rs.getDate("booking_date"));
-                booking.setStartDate(rs.getString("start_date"));
-                booking.setEndDate(rs.getString("end_date"));
-                booking.setRideType(rs.getString("ride_type"));
-                booking.setPickup(rs.getString("pickup"));
-                booking.setDestination(rs.getString("destination"));
-                booking.setBookingType(rs.getString("booking_type"));
-                booking.setReturnedDate(rs.getDate("returned_date"));
-                booking.setBookingStatus(rs.getString("booking_status"));
-                booking.setIsDeleted(rs.getInt("is_deleted"));
+                booking.setBookingId(rs.getInt(TableColumnConstant.BOOKING_ID));
+                booking.setCustomer(usersDao.getUserbyId(rs.getInt(TableColumnConstant.CUSTOMER_ID)));
+                booking.setDriver(usersDao.getUserbyId(rs.getInt(TableColumnConstant.DRIVER_ID)));
+                booking.setVehicle(vehicleDao.getVehicleById(rs.getInt(TableColumnConstant.VEHICLE_ID)));
+                booking.setBookingDate(rs.getDate(TableColumnConstant.BOOKING_DATE));
+                booking.setStartDate(rs.getString(TableColumnConstant.START_DATE));
+                booking.setEndDate(rs.getString(TableColumnConstant.END_DATE));
+                booking.setRideType(rs.getString(TableColumnConstant.RIDE_TYPE));
+                booking.setPickup(rs.getString(TableColumnConstant.PICKUP));
+                booking.setDestination(rs.getString(TableColumnConstant.DESTINATION));
+                booking.setBookingType(rs.getString(TableColumnConstant.BOOKING_TYPE));
+                booking.setReturnedDate(rs.getDate(TableColumnConstant.RETURNED_DATE));
+                booking.setBookingStatus(rs.getString(TableColumnConstant.BOOKING_STATUS));
+                booking.setIsDeleted(rs.getInt(TableColumnConstant.IS_DELETED));
         
             }
         }catch (SQLException sqlException){
@@ -248,6 +248,5 @@ public class BookingDaoImpl implements BookingDao {
         }
         return false;
     }
-
 }
 
